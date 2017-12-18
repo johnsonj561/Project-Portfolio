@@ -1,0 +1,25 @@
+<div class="container">
+
+  <!--  List of categories -->
+  <div class="col-sm-9">
+    <h3>Existing Categories</h3>
+    <table class="table">
+      <tr *ngFor="let category of categoryList, let i = index">
+        <td>{{category.name}}</td>
+        <td (click)="deleteCategory(category.name, i)" class="width-25 pointer">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </td>
+      </tr>
+      <tr *ngIf="!categoryList.length">
+        <td>No categories, add a category to get started</td>
+      </tr>
+    </table>
+  </div>
+
+  <!--  Add categories -->
+  <div class="col-sm-3">
+    <h3>Add Category</h3>
+    <app-category-form class="add-category-component" (formSubmitted)="submitForm($event, formData)"></app-category-form>
+  </div>
+
+</div>

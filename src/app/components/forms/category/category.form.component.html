@@ -1,0 +1,12 @@
+<form class="form-container">
+  <div class="input-container">
+    <input type="text" class="form-control" name="category" [(ngModel)]="formData.name">
+    <button class="btn btn-primary btn-sm" (click)="submitForm(formData)"><i class="fa fa-plus"></i>Add</button>
+  </div>
+</form>
+
+<!-- User Feedback -->
+<div class="alert-container">
+  <div class="alert alert-success text-center" *ngIf="formData.success" [textContent]="formData.success"></div>
+  <div class="alert alert-danger text-center" *ngIf="formData.error" [textContent]="formData.error"></div>
+</div>

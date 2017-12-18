@@ -1,0 +1,32 @@
+<form class="form-container">
+
+  <h3 [innerText]="formConfig.title" class="text-center"></h3>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Username</span>
+    <input autofocus type="text" class="form-control" name="username" [(ngModel)]="formData.username">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Password</span>
+    <input type="password" class="form-control" name="password" [(ngModel)]="formData.password">
+  </div>
+
+  <div *ngIf="formConfig.typeRegister" class="input-group input-group-sm">
+    <span class="input-group-addon">Confirm Password</span>
+    <input type="password" class="form-control" name="passwordConfirmation" [(ngModel)]="formData.passwordConfirmation">
+  </div>
+
+  <!-- Form Buttons -->
+  <div class="form-btn-container text-center">
+    <button class="btn btn-primary btn-sm" (click)="submitForm(formData)">Submit</button>
+    <a routerLink="/"><button class="btn btn-primary btn-sm">Cancel</button></a>
+  </div>
+
+</form>
+
+<!-- User Feedback -->
+<div class="alert-container">
+  <div class="alert alert-success text-center" *ngIf="formData.success" [textContent]="formData.success"></div>
+  <div class="alert alert-danger text-center" *ngIf="formData.error" [textContent]="formData.error"></div>
+</div>

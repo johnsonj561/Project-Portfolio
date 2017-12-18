@@ -1,0 +1,29 @@
+form {
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+  padding: 10px;
+}
+
+button {
+  width: 75px;
+}
+
+div.form-btn-container {
+  margin: 25px 0px;
+}
+
+div.input-group {
+  width: 100%;
+  margin: 10px 0px;
+}
+
+div.input-group .input-group-addon {
+  width: 125px;
+}
+
+.alert-container {
+  width: 90%;
+  margin: auto;
+  max-width: 400px;
+}

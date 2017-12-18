@@ -1,0 +1,42 @@
+<form class="form-container">
+
+  <h3 [innerText]="formConfig.title"></h3>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Name</span>
+    <input type="text" class="form-control" name="username" [(ngModel)]="formData.name">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Date</span>
+    <input type="text" class="form-control" name="date" [(ngModel)]="formData.date">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Tags (csv)</span>
+    <input type="text" class="form-control" name="date" [(ngModel)]="formData.tags">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Implementation (csv)</span>
+    <input type="text" class="form-control" name="implementation" [(ngModel)]="formData.implementation">
+  </div>
+
+  <div class="input-description">
+    <span>Project Description</span>
+    <textarea class="form-control" rows="5" name="description" [(ngModel)]="formData.description"></textarea>
+  </div>
+
+  <!-- Form Buttons -->
+  <div class="form-btn-container text-center">
+    <button class="btn btn-primary btn-sm" (click)="submitForm(formData)">Submit</button>
+    <button class="btn btn-primary btn-sm" (click)="cancelForm()">Cancel</button>
+  </div>
+
+</form>
+
+<!-- User Feedback -->
+<div class="alert-container">
+  <div class="alert alert-success text-center" *ngIf="formData.success" [textContent]="formData.success"></div>
+  <div class="alert alert-danger text-center" *ngIf="formData.error" [textContent]="formData.error"></div>
+</div>
