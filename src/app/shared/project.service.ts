@@ -26,9 +26,18 @@ export class ProjectService {
   }
 
   /**
+   * Update an existing project
+   */
+  updateProject(formData): Observable<any> {
+    return this.http.put(this.projectUrl, formData)
+      .map((res: Response) => res)
+      .catch((error: any) => Observable.throw('projectService.updateProject error: ' + error));
+  }
+
+  /**
    * Get all projects from Project collection
    */
-  getCategories(): Observable<any> {
+  getProjects(): Observable<any> {
     return this.http.get(this.projectUrl)
       .map((res: Response) => res)
       .catch((error: any) => Observable.throw('projectService.getProjects error: ' + error));
@@ -37,7 +46,7 @@ export class ProjectService {
   /**
    * Delete project from Project collections
    */
-  deleteCategory(projectName: string): Observable<any> {
+  deleteProject(projectName: string): Observable<any> {
     return this.http.delete(`${this.projectUrl}/${projectName}`)
       .map((res: Response) => res)
       .catch((error: any) => Observable.throw('projectService.deleteProject error: ' + error));

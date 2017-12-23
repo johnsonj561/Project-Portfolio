@@ -207,13 +207,23 @@ router.get('/session', (req, res) => {
 
 
 /**
- * Project API
+ * GET Project
+ * Get all projects from Project collection
  */
 router.get('/project', function (req, res) {
-  res.json({
-    success: true,
-    message: 'get(api/project)'
-  });
+  Project.find()
+    .then(resp => {
+      res.json({
+        success: true,
+        data: resp
+      })
+    }).catch(err => {
+      res.json({
+        success: false,
+        message: 'Error getting projects',
+        error: err
+      });
+    });
 });
 
 /**
@@ -221,11 +231,48 @@ router.get('/project', function (req, res) {
  * Add new project to Project collection
  */
 router.post('/project', function (req, res) {
-  res.json({
-    success: true,
-    message: 'post(api/project)',
-    data: req.body
-  });
+  const project = new Project();
+  console.log('\nreq.body: ', req.body);
+  project.name = req.body.name;
+  project.date = req.body.date;
+  project.tags = req.body.tags;
+  project.implementation = req.body.implementation;
+  project.description = req.body.description;
+  if (!(project.name && project.date)) {
+    res.json({
+      success: false,
+      message: 'Project name is required'
+    });
+  } else {
+    project.save(function (err) {
+      if (err) {
+        if (err.errors && err.errors.name) {
+          res.json({
+            success: false,
+            message: err.errors.name
+          });
+        } else {
+          res.json({
+            success: false,
+            message: 'Error saving project to DB',
+            error: err
+          });
+        }
+      } else {
+        res.json({
+          success: true,
+          message: 'Project saved',
+          data: {
+            name: project.name,
+            date: project.date,
+            tags: project.tags,
+            implementation: project.implementation,
+            description: project.description
+          }
+        });
+      }
+    });
+  }
 });
 
 /**
@@ -233,10 +280,42 @@ router.post('/project', function (req, res) {
  * Update an existing project in Project collection
  */
 router.put('/project', function (req, res) {
-  res.json({
-    success: true,
-    message: 'put(api/project)'
-  });
+  const projectName = req.body.name;
+  Project.findOne({
+    name: projectName
+  }).then(project => {
+    if (!project) {
+      res.json({
+        success: false,
+        message: `Unable to lookup Project ${projectName} in DB`
+      });
+    } else {
+      project.date = req.body.date;
+      project.tags = req.body.tags;
+      project.implementation = req.body.implementation;
+      project.description = req.body.description;
+      project.save()
+        .then(resp => {
+          res.json({
+            success: true,
+            message: `Project ${projectName} updated successfully`,
+            data: req.body
+          });
+        }).catch(err => {
+          res.json({
+            success: false,
+            message: `Error updating Project ${projectName}`,
+            error: err
+          });
+        });
+    }
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: `Error getting Project ${projectName} from DB`,
+      error: err
+    });
+  })
 });
 
 /**
@@ -244,9 +323,20 @@ router.put('/project', function (req, res) {
  * Delete project with projectName from Project collection
  */
 router.delete('/project/:projectName', function (req, res) {
-  res.json({
-    success: true,
-    message: 'delete(api/project)'
+  const projectName = req.params.projectName;
+  Project.findOneAndRemove({
+    name: projectName
+  }).then(resp => {
+    res.json({
+      success: true,
+      message: `Project ${projectName} was deleted from DB`
+    });
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: `Error deleting ${projectName} from DB`,
+      error: err
+    })
   });
 });
 

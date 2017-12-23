@@ -1,32 +1,50 @@
 var mongoose = require('mongoose');
+var validate = require('mongoose-validator');
 var Schema = mongoose.Schema;
 
 /*
  * Project Definition
  */
 var ProjectSchema = new Schema({
-  title: {
+  name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    //validate: nameValidator
   },
   date: {
-    type: Date,
+    type: String,
     required: true
   },
-  description: {
-    type: String,
+  tags: {
+    type: [String],
     required: false
   },
-  category: {
-    type: String,
-    required: true
+  implementation: {
+    type: [String],
+    required: false
   },
-  tools: {
-    type: String,
+  description: {
+    type: [String],
     required: false
   }
 });
+
+
+/**
+ * Project Validation
+ */
+var nameValidator = [
+  validate({
+    validator: 'isLength',
+    arguments: [2, 40],
+    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
+  }),
+  validate({
+    validator: 'isAlphanumeric',
+    message: 'Name can only contain letters and numbers'
+  })
+];
 
 
 module.exports = mongoose.model('Project', ProjectSchema);

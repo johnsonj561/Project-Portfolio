@@ -1,20 +1,26 @@
 <div class="container">
 
+  <div *ngIf="formConfig.loading">
+    <h3>Loading...</h3>
+  </div>
+
+
   <!--  View Projects -->
-  <div *ngIf="!formConfig">
+  <div *ngIf="!formConfig.loading && !formConfig.title">
 
     <!--  Controls -->
     <div class="project-controls-container">
-      <button class="btn btn-sm btn-primary" (click)="addProject()">Add New Project</button>
+      <button class="btn btn-sm btn-primary" (click)="displayNewProjectForm()">Add New Project</button>
     </div>
 
     <!--  List of Projects -->
     <div class="projects-container">
       <h3>Existing Projects</h3>
       <table class="table">
-        <tr *ngFor="let project of projectList, let i = index">
-          <td>Some Project</td>
-          <td class="width-25 pointer">Edit</td>
+        <tr *ngFor="let project of projectList">
+          <td [innerText]="project.name"></td>
+          <td [innerText]="project.date"></td>
+          <td class="width-25 pointer" (click)="displayEditProjectForm(project)">Edit</td>
         </tr>
         <tr *ngIf="!projectList.length">
           <td>No projects, add a project to get started</td>
@@ -26,7 +32,7 @@
 
 
   <!--  Add/Edit Projects -->
-  <app-project-form *ngIf="formConfig" (formSubmitted)="submitForm($event, formData)" (formCancelled)="cancelForm()" [formData]="formData" [formConfig]="formConfig">
+  <app-project-form *ngIf="!formConfig.loading && formConfig.title" (formSubmitted)="submitForm($event, formData)" (formCancelled)="cancelForm()" (projectDeleted)=deleteProject(formData) [formData]="formData" [formConfig]="formConfig">
   </app-project-form>
 
 </div>

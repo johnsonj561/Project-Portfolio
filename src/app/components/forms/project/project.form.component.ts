@@ -13,12 +13,17 @@ export class ProjectFormComponent implements OnInit {
   formSubmitted: EventEmitter<any> = new EventEmitter();
   @Output()
   formCancelled: EventEmitter<any> = new EventEmitter();
+  @Output()
+  projectDeleted: EventEmitter<any> = new EventEmitter();
+
   @Input() private formData: any;
   @Input() private formConfig: any;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit(): void {
+    console.log('form init with data: ', this.formData);
+  }
 
   submitForm(formData): void {
     this.formSubmitted.emit(formData);
@@ -26,6 +31,10 @@ export class ProjectFormComponent implements OnInit {
 
   cancelForm(): void {
     this.formCancelled.emit();
+  }
+
+  deleteProject(formData): void {
+    this.projectDeleted.emit(formData);
   }
 
 }
