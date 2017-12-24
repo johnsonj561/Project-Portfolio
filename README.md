@@ -8,6 +8,8 @@ This project is a first attempt implementing single page application with Angula
 
 ## Build
 
+Be sure to create environment file '.env', see [sample .env](sample.env).
+
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
 ## Running unit tests
