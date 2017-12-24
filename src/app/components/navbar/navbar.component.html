@@ -21,9 +21,9 @@
             <li><a routerLink="/courses">Courses</a></li>
             <li><a routerLink="/edit-categories">Categories</a></li>
             <li><a routerLink="/edit-projects">Projects</a></li>
+            <li class="pointer"><a (click)="logout()">Logout</a></li>
           </ul>
         </li>
-        <li class="pointer"><a *ngIf="activeSession" (click)="logout()">Logout</a></li>
         <li><a *ngIf="!activeSession" routerLink="/login">Login</a></li>
       </ul>
       <form class="navbar-form navbar-right">

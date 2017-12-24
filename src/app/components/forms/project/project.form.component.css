@@ -9,11 +9,22 @@ button {
   width: 75px;
 }
 
+button.add-row {
+  width: auto;
+  margin: 10px 0px;
+}
+
+button.add-row>span {
+  margin-right: 5px;
+}
+
 div.form-btn-container {
   margin: 25px 0px;
 }
 
-div.input-group {
+div.input-group,
+div.implementation-group,
+div.description-group {
   width: 100%;
   margin: 10px 0px;
 }
@@ -28,7 +39,8 @@ div.input-group .input-group-addon {
   max-width: 400px;
 }
 
-.input-description>span {
+.implementation-group>span,
+.description-group>span {
   width: 100%;
   display: inline-block;
   height: 30px;
@@ -48,4 +60,26 @@ div.input-group .input-group-addon {
 .input-description>textarea {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+}
+
+.implementation-group {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.implementation-group>.input-row {
+  position: relative;
+}
+
+.input-row>input {
+  padding-right: 50px;
+}
+
+.input-row>span.glyphicon-remove-circle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  font-size: 1.4em;
+  cursor: pointer;
 }

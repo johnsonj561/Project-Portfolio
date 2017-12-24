@@ -17,7 +17,7 @@ var ProjectSchema = new Schema({
     required: true
   },
   tags: {
-    type: [String],
+    type: String,
     required: false
   },
   implementation: {
@@ -26,6 +26,10 @@ var ProjectSchema = new Schema({
   },
   description: {
     type: [String],
+    required: false
+  },
+  github: {
+    type: String,
     required: false
   }
 });

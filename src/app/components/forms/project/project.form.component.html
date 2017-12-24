@@ -18,26 +18,37 @@
   </div>
 
   <div class="input-group input-group-sm">
-    <span class="input-group-addon">Implementation (csv)</span>
-    <input type="text" class="form-control" name="implementation" [(ngModel)]="formData.implementation">
+    <span class="input-group-addon">Github URL</span>
+    <input type="text" class="form-control" name="github" [(ngModel)]="formData.github">
   </div>
 
-  <div class="input-description">
+  <div class="description-group">
     <span>Project Description</span>
-    <textarea class="form-control" rows="5" name="description" [(ngModel)]="formData.description"></textarea>
+    <textarea class="form-control" rows="3" name="description" [(ngModel)]="formData.description"></textarea>
+  </div>
+
+  <div class="implementation-group">
+    <span>Implementation</span>
+    <div class="input-row" *ngFor="let item of formData.implementation; let i = index; trackBy:trackByFn">
+      <input type="text" class="form-control" name="implementation-{{i}}" [(ngModel)]=" formData.implementation[i] " />
+      <span class="glyphicon glyphicon-remove-circle " (click)="deleteImplementationRow(item, i) "></span>
+    </div>
+    <button class="btn btn-default btn-sm pull-right add-row " (click)="addImplementationRow() ">
+      <span class="glyphicon glyphicon-plus "></span>Add Row
+    </button>
   </div>
 
   <!-- Form Buttons -->
-  <div class="form-btn-container text-center">
-    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" (click)="submitForm(formData)">Submit</button>
-    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" (click)="cancelForm()">Cancel</button>
-    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" *ngIf="formConfig.editProject" (click)="deleteProject(formData)">Delete</button>
+  <div class="form-btn-container text-center ">
+    <button class="btn btn-primary btn-sm " [disabled]="formConfig.loading " (click)="submitForm(formData) ">Submit</button>
+    <button class="btn btn-primary btn-sm " [disabled]="formConfig.loading " (click)="cancelForm() ">Cancel</button>
+    <button class="btn btn-primary btn-sm " [disabled]="formConfig.loading " *ngIf="formConfig.editProject " (click)="deleteProject(formData) ">Delete</button>
   </div>
 
 </form>
 
 <!-- User Feedback -->
-<div class="alert-container">
-  <div class="alert alert-success text-center" *ngIf="formData.success" [textContent]="formData.success"></div>
-  <div class="alert alert-danger text-center" *ngIf="formData.error" [textContent]="formData.error"></div>
+<div class="alert-container ">
+  <div class="alert alert-success text-center " *ngIf="formData.success " [textContent]="formData.success "></div>
+  <div class="alert alert-danger text-center " *ngIf="formData.error " [textContent]="formData.error "></div>
 </div>

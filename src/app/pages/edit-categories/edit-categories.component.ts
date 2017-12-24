@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryFormComponent } from '../../components/forms/category/category.form.component';
 import { CategoryService } from '../../shared/category.service';
+import { SpinnerService } from '../../shared/spinner.service';
 
 @Component({
   selector: 'app-edit-categories-page',
@@ -11,9 +12,10 @@ export class EditCategoriesPageComponent implements OnInit {
 
   categoryList = [];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private spinnerService: SpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.toggleSpinner(true);
     this.categoryService.getCategories()
       .subscribe(resp => {
         if (resp.success) {
@@ -21,6 +23,7 @@ export class EditCategoriesPageComponent implements OnInit {
         } else {
           console.log('Error getting categories', resp);
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 
@@ -29,6 +32,7 @@ export class EditCategoriesPageComponent implements OnInit {
    * Removes categoryName from Category collection
    */
   deleteCategory(categoryName, index): void {
+    this.spinnerService.toggleSpinner(true);
     this.categoryService.deleteCategory(categoryName)
       .subscribe(resp => {
         if (resp.success) {
@@ -36,6 +40,7 @@ export class EditCategoriesPageComponent implements OnInit {
         } else {
           console.log('Error deleting category: ', resp.message);
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 
@@ -45,6 +50,7 @@ export class EditCategoriesPageComponent implements OnInit {
    */
   submitForm(formData): void {
     if (formData && formData.name && formData.name.length) {
+      this.spinnerService.toggleSpinner(true);
       this.categoryService.addCategory(formData)
         .subscribe(resp => {
           if (!resp.success) {
@@ -54,7 +60,9 @@ export class EditCategoriesPageComponent implements OnInit {
             this.categoryList.push({
               name: formData.name
             });
+            formData.name = '';
           }
+          this.spinnerService.toggleSpinner(false);
         });
     }
 

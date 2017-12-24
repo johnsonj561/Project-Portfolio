@@ -23,6 +23,8 @@ export class ProjectFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('form init with data: ', this.formData);
+    // if no implementations, add empty row
+    this.formData.implementation = this.formData.implementation || [''];
   }
 
   submitForm(formData): void {
@@ -35,6 +37,24 @@ export class ProjectFormComponent implements OnInit {
 
   deleteProject(formData): void {
     this.projectDeleted.emit(formData);
+  }
+
+  addImplementationRow(): void {
+    this.formData.implementation.push('');
+    console.log(this.formData);
+  }
+
+  deleteImplementationRow(idx): void {
+    // if the last row, clear it
+    if(this.formData.implementation.length === 1) {
+      this.formData.implementation = [''];
+    } else {
+      this.formData.implementation.splice(idx, 1);
+    }
+  }
+
+  trackByFn(index: any, item: any) {
+   return index;
   }
 
 }

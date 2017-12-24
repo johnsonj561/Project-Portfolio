@@ -13,10 +13,14 @@ export class NavbarComponent implements OnInit {
 
   query;
   navbarData;
+  spinnerOn = false;
 
   @Input() activeSession: boolean;
 
-  constructor(private userService: UserService, private sessionService: SessionService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private sessionService: SessionService,
+    private router: Router) {}
 
   ngOnInit() {}
 

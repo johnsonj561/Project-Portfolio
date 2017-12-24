@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../shared/user.service';
+import { SpinnerService } from '../../shared/spinner.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent {
 
   formData: any = {
     error: false,
@@ -20,10 +21,10 @@ export class RegisterPageComponent implements OnInit {
     typeRegister: true
   };
 
-  constructor(private userService: UserService, private router: Router) { }
-
-  ngOnInit() {
-  }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private spinnerService: SpinnerService) { }
 
   /**
    * Submit Form
@@ -31,6 +32,7 @@ export class RegisterPageComponent implements OnInit {
    */
   submitForm($event, formData): void {
     formData.error = formData.success = false;
+    this.spinnerService.toggleSpinner(true);
     this.userService.registerUser(formData)
       .subscribe(resp => {
         if (!resp.success) {
@@ -39,6 +41,7 @@ export class RegisterPageComponent implements OnInit {
           formData.success = resp.message + '. Redirecting home...';
           setTimeout(() => this.router.navigate(['/']), 2000);
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 

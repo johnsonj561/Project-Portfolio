@@ -8,7 +8,7 @@ const Course = require('../models/course.model');
 const Project = require('../models/project.model');
 
 // token
-const TOKEN_EXPIRATION = '20m'
+const TOKEN_EXPIRATION = '30m'
 
 
 /* GET api listing. */
@@ -238,6 +238,7 @@ router.post('/project', function (req, res) {
   project.tags = req.body.tags;
   project.implementation = req.body.implementation;
   project.description = req.body.description;
+  project.github = req.body.github;
   if (!(project.name && project.date)) {
     res.json({
       success: false,
@@ -266,6 +267,7 @@ router.post('/project', function (req, res) {
             name: project.name,
             date: project.date,
             tags: project.tags,
+            github: project.github,
             implementation: project.implementation,
             description: project.description
           }
@@ -294,6 +296,7 @@ router.put('/project', function (req, res) {
       project.tags = req.body.tags;
       project.implementation = req.body.implementation;
       project.description = req.body.description;
+      project.github = req.body.github;
       project.save()
         .then(resp => {
           res.json({

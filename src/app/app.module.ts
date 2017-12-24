@@ -22,6 +22,7 @@ import { EditProjectsPageComponent } from './pages/edit-projects/edit-projects.c
 
 // Other Components
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { MainSpinnerComponent } from './components/spinners/main.spinner.component';
 import { UserFormComponent } from './components/forms/user/user.form.component';
 import { ProjectFormComponent } from './components/forms/project/project.form.component';
 import { CategoryFormComponent } from './components/forms/category/category.form.component';
@@ -33,6 +34,7 @@ import { SessionService } from './shared/session.service';
 import { WindowRefService } from './shared/window.ref.service';
 import { TokenService } from './shared/token.service';
 import { ProjectService } from './shared/project.service';
+import { SpinnerService } from './shared/spinner.service';
 
 // Interceptor
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -60,6 +62,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     RegisterPageComponent,
     LoginPageComponent,
     NavbarComponent,
+    MainSpinnerComponent,
     UserFormComponent,
     ProjectFormComponent,
     CategoryFormComponent,
@@ -74,6 +77,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     WindowRefService,
     LoggedInGuard,
     LoggedOutGuard,
+    SpinnerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

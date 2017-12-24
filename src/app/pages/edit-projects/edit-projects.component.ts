@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../shared/project.service';
+import { SpinnerService } from '../../shared/spinner.service';
 
 @Component({
   selector: 'app-edit-projects-page',
@@ -12,7 +13,7 @@ export class EditProjectsPageComponent implements OnInit {
   private projectList = [];
   private formConfig: any = {};
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.loadProjects();
@@ -24,9 +25,9 @@ export class EditProjectsPageComponent implements OnInit {
    */
   submitForm(formData): void {
     formData.error = formData.success = false;
-    const apiData = this.prepareFormData(formData);
     const method = (this.formConfig.addProject) ? 'addProject' : 'updateProject';
-    this.projectService[method](apiData )
+    this.spinnerService.toggleSpinner(true);
+    this.projectService[method](formData)
       .subscribe(resp => {
         if (resp.success) {
           formData.success = resp.message + '... Redirecting';
@@ -35,6 +36,7 @@ export class EditProjectsPageComponent implements OnInit {
         } else {
           formData.error = resp.message;
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 
@@ -42,6 +44,7 @@ export class EditProjectsPageComponent implements OnInit {
    * Delete Project
    */
   deleteProject(formData): void {
+    this.spinnerService.toggleSpinner(true);
     this.projectService.deleteProject(formData.name)
       .subscribe(resp => {
         if (resp.success) {
@@ -51,6 +54,7 @@ export class EditProjectsPageComponent implements OnInit {
         } else {
           this.formData.error = resp.message;
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 
@@ -71,8 +75,6 @@ export class EditProjectsPageComponent implements OnInit {
   displayEditProjectForm(project): void {
     const formData = {};
     Object.keys(project).forEach(key => formData[key] = project[key]);
-    formData['tags'] = (formData['tags']) ? formData['tags'].join(', ') : undefined;
-    formData['implementation'] = (formData['implementation']) ? formData['implementation'].join(', ') : undefined;
     this.formConfig = {
       title: 'Edit Project',
       editProject: true
@@ -89,29 +91,14 @@ export class EditProjectsPageComponent implements OnInit {
   }
 
   /**
-   * Prepare form data for API call
-   */
-  private prepareFormData(formData: any): any {
-    const apiData = {};
-    Object.keys(formData).forEach(key => apiData[key] = formData[key]);
-    if (apiData['tags']) {
-      apiData['tags'] = apiData['tags'].split(',').map(item => item.trim());
-    }
-    if (apiData['implementation']) {
-      apiData['implementation'] = apiData['implementation'].split(',').map(item => item.trim());
-    }
-    return formData;
-  }
-
-  /**
    * Load Project List
    */
   private loadProjects(): void {
-    this.formConfig.loading = true;
+    this.spinnerService.toggleSpinner(true);
     this.projectService.getProjects()
       .subscribe(resp => {
         this.projectList = (resp.success) ? resp.data : [];
-        this.formConfig.loading = false;
+        this.spinnerService.toggleSpinner(false);
     });
   }
 

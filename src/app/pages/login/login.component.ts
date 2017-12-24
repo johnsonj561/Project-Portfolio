@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { TokenService } from '../../shared/token.service';
 import { SessionService } from '../../shared/session.service';
+import { SpinnerService } from '../../shared/spinner.service';
 
 @Component({
   selector: 'app-login-page',
@@ -26,6 +27,7 @@ export class LoginPageComponent implements OnInit {
     private userService: UserService,
     private tokenService: TokenService,
     private sessionService: SessionService,
+     private spinnerService: SpinnerService,
     private router: Router) { }
 
   ngOnInit() { }
