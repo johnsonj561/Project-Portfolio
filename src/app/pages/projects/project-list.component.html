@@ -1,0 +1,32 @@
+<div class="container">
+
+  <!--  TODO -->
+  <!--  Add Search and Filter -->
+
+  <div class="project-card-container">
+
+    <div *ngFor="let project of projectList" class="project-card panel panel-default">
+
+      <div class="panel-heading">
+        <span [textContent]="project.name" class="panel-title"></span>
+      </div>
+
+      <div class="panel-body">
+        <div class="tags">
+          <span *ngFor="let tag of project.tags" class="badge" [textContent]="tag"></span>
+        </div>
+        <div class="description">
+          <span [textContent]="project.description"></span>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <span class="project-date">{{ project.date | date:'mediumDate' }}</span>
+        <button class="btn btn-primary btn-sm" [routerLink]="['/project', project.name]">View</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

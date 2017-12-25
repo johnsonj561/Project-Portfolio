@@ -41,12 +41,11 @@ export class ProjectFormComponent implements OnInit {
 
   addImplementationRow(): void {
     this.formData.implementation.push('');
-    console.log(this.formData);
   }
 
   deleteImplementationRow(idx): void {
-    // if the last row, clear it
-    if(this.formData.implementation.length === 1) {
+    // if the last row, clear it instead of splicing it
+    if (this.formData.implementation.length === 1) {
       this.formData.implementation = [''];
     } else {
       this.formData.implementation.splice(idx, 1);

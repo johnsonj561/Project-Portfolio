@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -10,10 +10,9 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ProjectService {
 
-  // private instance variable to hold base url
   private projectUrl = '/api/project';
+  private projectsUrl = '/api/projects';
 
-  // Resolve HTTP using the constructor
   constructor (private http: HttpClient) {}
 
   /**
@@ -35,12 +34,24 @@ export class ProjectService {
   }
 
   /**
-   * Get all projects from Project collection
+   * Get Project
+   * Get project with projectName from Project collection
    */
-  getProjects(): Observable<any> {
-    return this.http.get(this.projectUrl)
+  getProject(projectName: String): Observable<any> {
+    const url = `${this.projectUrl}/${projectName}`;
+    return this.http.get(url)
       .map((res: Response) => res)
       .catch((error: any) => Observable.throw('projectService.getProjects error: ' + error));
+  }
+
+  /**
+   * Get Projects
+   * Returns all projects from Project collection
+   */
+  getProjects(): Observable<any> {
+    return this.http.get(this.projectsUrl)
+      .map((res: Response) => res)
+      .catch((error: any) => Observable.throw('proejctService.getProject error: ' + error));
   }
 
   /**

@@ -1,0 +1,57 @@
+div.project-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+div.project-card {
+  width: 300px;
+  margin: 25px auto;
+}
+
+.panel-body>.tags {
+  height: 45px;
+  overflow: hidden;
+}
+
+.badge {
+  margin: 2px;
+  font-weight: 500;
+}
+
+.panel-body>.description {
+  overflow: hidden;
+  margin-top: 10px;
+  text-overflow: ellipsis;
+  overflow: auto;
+  height: 150px;
+}
+
+.panel-footer {
+  position: relative;
+}
+
+.panel-footer>button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.panel-footer>.project-date {
+  font-style: italic;
+  font-size: .9em;
+}
+
+
+/* project.component */
+
+.project-container label {
+  margin-top: 25px;
+  display: block;
+}
+
+.date-string {
+  float: right;
+  font-style: italic;
+}

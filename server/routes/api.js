@@ -162,6 +162,54 @@ router.get('/category', function (req, res) {
     });
 });
 
+/**
+ * GET Project
+ * Get project with projectName from Project collection
+ */
+router.get('/project/:projectName', function (req, res) {
+  const projectName = req.params.projectName;
+  Project.findOne({
+    name: projectName
+  }).then(resp => {
+    if (resp) {
+      res.json({
+        success: true,
+        data: resp
+      });
+    } else {
+      res.json({
+        success: false,
+        message: `Project ${projectName} not found`
+      });
+    }
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: 'Error getting projects',
+      error: err
+    });
+  });
+});
+
+/**
+ * GET Projects
+ * Get all projects from Project collection
+ */
+router.get('/projects', function (req, res) {
+  Project.find().then(resp => {
+    res.json({
+      success: true,
+      data: resp
+    })
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: 'Error getting projects',
+      error: err
+    });
+  });
+});
+
 
 
 /*
@@ -207,38 +255,20 @@ router.get('/session', (req, res) => {
 
 
 /**
- * GET Project
- * Get all projects from Project collection
- */
-router.get('/project', function (req, res) {
-  Project.find()
-    .then(resp => {
-      res.json({
-        success: true,
-        data: resp
-      })
-    }).catch(err => {
-      res.json({
-        success: false,
-        message: 'Error getting projects',
-        error: err
-      });
-    });
-});
-
-/**
  * POST Project
  * Add new project to Project collection
  */
 router.post('/project', function (req, res) {
   const project = new Project();
-  console.log('\nreq.body: ', req.body);
+  // TODO
+  // replace obj assignment with _.extend/_.merge
   project.name = req.body.name;
   project.date = req.body.date;
   project.tags = req.body.tags;
   project.implementation = req.body.implementation;
   project.description = req.body.description;
   project.github = req.body.github;
+  project.course = req.body.course;
   if (!(project.name && project.date)) {
     res.json({
       success: false,
@@ -269,7 +299,8 @@ router.post('/project', function (req, res) {
             tags: project.tags,
             github: project.github,
             implementation: project.implementation,
-            description: project.description
+            description: project.description,
+            course: project.course,
           }
         });
       }
@@ -297,6 +328,7 @@ router.put('/project', function (req, res) {
       project.implementation = req.body.implementation;
       project.description = req.body.description;
       project.github = req.body.github;
+      project.course = req.body.course;
       project.save()
         .then(resp => {
           res.json({

@@ -1,0 +1,38 @@
+<div class="container">
+
+  <!-- User Feedback -->
+  <div *ngIf="error" class="alert-container">
+    <div class="alert alert-danger text-center" *ngIf="error" [textContent]="error"></div>
+  </div>
+
+  <div *ngIf="!error" class="project-container">
+
+    <span [textContent]="project.date | date:'mediumDate'" class="date-string"></span>
+
+    <h3 [textContent]="project.name"></h3>
+
+    <label>Description</label>
+    <p [textContent]="project.description"></p>
+
+    <!-- Left half -->
+    <div class="col-sm-8">
+      <label>Implementation</label>
+      <ul>
+        <li *ngFor="let item of project.implementation" [textContent]="item"></li>
+      </ul>
+    </div>
+    <!-- Right half -->
+    <div class="col-sm-4">
+      <label>Github</label>
+      <a href="{{project.github}}" target="_blank"><span [textContent]="project.github"></span></a>
+
+      <label>Course</label>
+      <p [textContent]="project.course"></p>
+
+      <label>Tags</label>
+      <span *ngFor="let tag of project.tags" [textContent]="tag" class="badge"></span>
+    </div>
+
+  </div>
+
+</div>

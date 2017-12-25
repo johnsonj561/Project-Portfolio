@@ -31,6 +31,10 @@ var ProjectSchema = new Schema({
   github: {
     type: String,
     required: false
+  },
+  course: {
+    type: String,
+    required: false
   }
 });
 

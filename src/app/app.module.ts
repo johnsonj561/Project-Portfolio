@@ -12,7 +12,8 @@ import { ComponentRouter } from './app.routes';
 
 // Page Components
 import { HomePageComponent } from './pages/home/home.component';
-import { ProjectsPageComponent } from './pages/projects/projects.component';
+import { ProjectListPageComponent } from './pages/projects/project-list.component';
+import { ProjectPageComponent } from './pages/projects/project.component';
 import { CategoriesPageComponent } from './pages/categories/categories.component';
 import { EditCategoriesPageComponent } from './pages/edit-categories/edit-categories.component';
 import { CoursesPageComponent } from './pages/courses/courses.component';
@@ -55,7 +56,8 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
   declarations: [
     AppComponent,
     HomePageComponent,
-    ProjectsPageComponent,
+    ProjectListPageComponent,
+    ProjectPageComponent,
     CategoriesPageComponent,
     EditCategoriesPageComponent,
     CoursesPageComponent,

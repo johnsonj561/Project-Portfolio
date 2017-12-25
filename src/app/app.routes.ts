@@ -1,7 +1,8 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './pages/home/home.component';
-import { ProjectsPageComponent } from './pages/projects/projects.component';
+import { ProjectListPageComponent } from './pages/projects/project-list.component';
+import { ProjectPageComponent } from './pages/projects/project.component';
 import { CoursesPageComponent } from './pages/courses/courses.component';
 import { CategoriesPageComponent } from './pages/categories/categories.component';
 import { EditCategoriesPageComponent } from './pages/edit-categories/edit-categories.component';
@@ -15,7 +16,8 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent },
-  { path: 'projects', component: ProjectsPageComponent },
+  { path: 'project-list', component: ProjectListPageComponent },
+  { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'courses', component: CoursesPageComponent },
   { path: 'categories', component: CategoriesPageComponent },
   { path: 'edit-categories', component: EditCategoriesPageComponent, canActivate: [LoggedInGuard] },

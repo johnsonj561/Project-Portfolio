@@ -27,7 +27,7 @@ export class LoginPageComponent implements OnInit {
     private userService: UserService,
     private tokenService: TokenService,
     private sessionService: SessionService,
-     private spinnerService: SpinnerService,
+    private spinnerService: SpinnerService,
     private router: Router) { }
 
   ngOnInit() { }
@@ -38,6 +38,7 @@ export class LoginPageComponent implements OnInit {
    */
   submitForm($event, formData): void {
     formData.error = formData.success = false;
+    this.spinnerService.toggleSpinner(true);
     this.userService.authenticateUser(formData)
       .subscribe(resp => {
         if (!resp.success) {
@@ -50,6 +51,7 @@ export class LoginPageComponent implements OnInit {
           this.sessionService.startSessionInterval();
           setTimeout(() => this.router.navigate(['/']), 2000);
         }
+        this.spinnerService.toggleSpinner(false);
       });
   }
 

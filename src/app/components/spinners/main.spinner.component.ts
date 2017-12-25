@@ -11,6 +11,14 @@ export class MainSpinnerComponent implements OnInit, OnDestroy {
 
   private loadingSubscription: Subscription;
   private loading: boolean;
+  private loadingText: String;
+  private loadingMessages = [
+    'Please hold while I eat these circles...',
+    'Un Momento, Por Favor...',
+    'Me so busy, you wait...',
+    'Nom Nom Nommmm...',
+    'Pacman Hungry...'
+  ];
 
   constructor(private spinnerService: SpinnerService) {}
 
@@ -20,7 +28,11 @@ export class MainSpinnerComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.loadingSubscription = this.spinnerService.mainSpinner$
-      .subscribe(loading => this.loading = loading);
+      .subscribe(loading => {
+        const ran = Math.floor(Math.random() * this.loadingMessages.length);
+        this.loadingText = this.loadingMessages[ran];
+        this.loading = loading;
+      });
   }
 
   /**
