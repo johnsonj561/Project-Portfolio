@@ -10,7 +10,7 @@ import { SpinnerService } from '../../shared/spinner.service';
 })
 export class EditCategoriesPageComponent implements OnInit {
 
-  categoryList = [];
+  private categoryList = [];
 
   constructor(private categoryService: CategoryService, private spinnerService: SpinnerService) { }
 

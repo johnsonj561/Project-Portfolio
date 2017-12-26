@@ -5,11 +5,6 @@ var Schema = mongoose.Schema;
  * Course Definition
  */
 var CourseSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   title: {
     type: String,
     required: true,
@@ -17,7 +12,11 @@ var CourseSchema = new Schema({
   },
   semester: {
     type: String,
-    required: true
+    required: false
+  },
+  year: {
+    type: String,
+    required: false
   },
   book: {
     type: String,
@@ -25,10 +24,10 @@ var CourseSchema = new Schema({
   },
   description: {
     type: String,
-    required: false
+    required: true
   },
   topics: {
-    type: String,
+    type: [String],
     required: false
   }
 });

@@ -2,31 +2,68 @@
 
   <!--  TODO -->
   <!--  Add Search and Filter -->
+  <div class="col-sm-12">
 
-  <div class="project-card-container">
+    <div class="col-sm-3">
+      <label>Filter By Text</label>
+      <input class="form-control text-filter" [(ngModel)]="searchText">
+    </div>
 
-    <div *ngFor="let project of projectList" class="project-card panel panel-default">
+    <div class="col-sm-3">
+      <label>Filter By Course</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option>All</option>
+        <option>Course 1</option>
+        <option>Long Course 2</option>
+        <option>Course 3</option>
+        <option>The longest of courses 5</option>
+        <option>Course 6</option>
+      </select>
+    </div>
 
-      <div class="panel-heading">
-        <span [textContent]="project.name" class="panel-title"></span>
-      </div>
+    <div class="col-sm-3">
+      <label>Filter By Tag</label>
+      <select class="form-control" name="tagFilter" (change)="tagFilterChange(tagFilter)" [(ngModel)]="tagFilter">
+        <option>All</option>
+        <option *ngFor="let tag of tagList" [textContent]="tag.name"></option>
+      </select>
+    </div>
 
-      <div class="panel-body">
-        <div class="tags">
-          <span *ngFor="let tag of project.tags" class="badge" [textContent]="tag"></span>
-        </div>
-        <div class="description">
-          <span [textContent]="project.description"></span>
-        </div>
-      </div>
-
-      <div class="panel-footer">
-        <span class="project-date">{{ project.date | date:'mediumDate' }}</span>
-        <button class="btn btn-primary btn-sm" [routerLink]="['/project', project.name]">View</button>
-      </div>
-
+    <div class="col-sm-3">
+      <button class="btn btn-default btn-sm clear-filter-btn" (click)="clearFilters()">Clear Filters</button>
     </div>
 
   </div>
+
+  <div class="col-sm-12">
+    <div class="project-card-container">
+
+      <div *ngFor="let project of filteredProjectList | filter : searchText" class="project-card panel panel-default">
+
+        <div class="panel-heading">
+          <span [textContent]="project.name" class="panel-title"></span>
+        </div>
+
+        <div class="panel-body">
+          <div class="tags">
+            <span *ngFor="let tag of project.tags" class="badge" [textContent]="tag"></span>
+          </div>
+          <div class="description">
+            <span [textContent]="project.description"></span>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <span class="project-date">{{ project.date | date:'mediumDate' }}</span>
+          <button class="btn btn-primary btn-sm" [routerLink]="['/project', project.name]">View</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
 
 </div>

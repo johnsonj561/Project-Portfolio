@@ -1,0 +1,49 @@
+<form class="form-container">
+
+  <h3 [innerText]="formConfig.title"></h3>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Title</span>
+    <input type="text" class="form-control" name="title" [(ngModel)]="formData.title" [attr.readonly]="formConfig.editCourse">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Semester</span>
+    <input type="text" class="form-control" name="semester" [(ngModel)]="formData.semester">
+  </div>
+
+  <div class="input-group input-group-sm">
+    <span class="input-group-addon">Year</span>
+    <input type="text" class="form-control" name="year" [(ngModel)]="formData.year">
+  </div>
+
+  <div class="description-group">
+    <span>Course Description</span>
+    <textarea class="form-control" rows="3" name="description" [(ngModel)]="formData.description"></textarea>
+  </div>
+
+  <div class="topics-group">
+    <span>Topics</span>
+    <div class="input-row" *ngFor="let topic of formData.topics; let i = index; trackBy:trackByFn">
+      <input type="text" class="form-control" name="topic-{{i}}" [(ngModel)]=" formData.topics[i] " />
+      <span class="glyphicon glyphicon-remove-circle " (click)="deleteTopicRow(topic, i) "></span>
+    </div>
+    <button class="btn btn-default btn-sm pull-right add-row" (click)="addTopicRow() ">
+      <span class="glyphicon glyphicon-plus "></span>Add Row
+    </button>
+  </div>
+
+  <!-- Form Buttons -->
+  <div class="form-btn-container text-center ">
+    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" (click)="submitForm(formData)">Submit</button>
+    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" (click)="cancelForm()">Cancel</button>
+    <button class="btn btn-primary btn-sm" [disabled]="formConfig.loading" *ngIf="formConfig.editCourse" (click)="deleteCourse(formData)">Delete</button>
+  </div>
+
+</form>
+
+<!-- User Feedback -->
+<div class="alert-container ">
+  <div class="alert alert-success text-center " *ngIf="formData.success " [textContent]="formData.success "></div>
+  <div class="alert alert-danger text-center " *ngIf="formData.error " [textContent]="formData.error "></div>
+</div>

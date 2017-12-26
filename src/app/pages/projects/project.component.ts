@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 import { ProjectService } from '../../shared/project.service';
 import { SpinnerService } from '../../shared/spinner.service';
 
@@ -15,7 +16,11 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   private project: any = {};
   private error: String;
 
-  constructor(private projectService: ProjectService, private spinnerService: SpinnerService, private route: ActivatedRoute) { }
+  constructor(
+    private projectService: ProjectService,
+    private spinnerService: SpinnerService,
+    private route: ActivatedRoute,
+    private _location: Location) { }
 
   ngOnInit() {
     this.nameSubscription = this.route.params.subscribe(params => this.loadProject(params['projectName']));
@@ -38,6 +43,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         }
         this.spinnerService.toggleSpinner(false);
       });
+  }
+
+  backPage(): void {
+    this._location.back();
   }
 
 }

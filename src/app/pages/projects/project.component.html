@@ -1,3 +1,5 @@
+<button class="btn btn-default btn-sm btn-back" (click)="backPage()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+
 <div class="container">
 
   <!-- User Feedback -->
@@ -11,8 +13,10 @@
 
     <h3 [textContent]="project.name"></h3>
 
-    <label>Description</label>
-    <p [textContent]="project.description"></p>
+    <div class="col-sm-12">
+      <label>Description</label>
+      <p [textContent]="project.description"></p>
+    </div>
 
     <!-- Left half -->
     <div class="col-sm-8">

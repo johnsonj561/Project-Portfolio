@@ -20,12 +20,14 @@ import { CoursesPageComponent } from './pages/courses/courses.component';
 import { RegisterPageComponent } from './pages/register/register.component';
 import { LoginPageComponent } from './pages/login/login.component';
 import { EditProjectsPageComponent } from './pages/edit-projects/edit-projects.component';
+import { EditCoursesPageComponent } from './pages/edit-courses/edit-courses.component';
 
 // Other Components
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MainSpinnerComponent } from './components/spinners/main.spinner.component';
 import { UserFormComponent } from './components/forms/user/user.form.component';
 import { ProjectFormComponent } from './components/forms/project/project.form.component';
+import { CourseFormComponent } from './components/forms/course/course.form.component';
 import { CategoryFormComponent } from './components/forms/category/category.form.component';
 
 // Shared Services
@@ -36,6 +38,10 @@ import { WindowRefService } from './shared/window.ref.service';
 import { TokenService } from './shared/token.service';
 import { ProjectService } from './shared/project.service';
 import { SpinnerService } from './shared/spinner.service';
+import { CourseService } from './shared/course.service';
+
+// Pipes
+import { FilterPipe } from './shared/filter.pipe';
 
 // Interceptor
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -67,8 +73,11 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     MainSpinnerComponent,
     UserFormComponent,
     ProjectFormComponent,
+    CourseFormComponent,
     CategoryFormComponent,
-    EditProjectsPageComponent
+    EditProjectsPageComponent,
+    EditCoursesPageComponent,
+    FilterPipe,
   ],
   providers: [
     UserService,
@@ -80,6 +89,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     LoggedInGuard,
     LoggedOutGuard,
     SpinnerService,
+    CourseService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

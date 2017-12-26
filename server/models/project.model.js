@@ -25,7 +25,7 @@ var ProjectSchema = new Schema({
     required: false
   },
   description: {
-    type: [String],
+    type: String,
     required: false
   },
   github: {

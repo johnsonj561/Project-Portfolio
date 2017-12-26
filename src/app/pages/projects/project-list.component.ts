@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../shared/project.service';
+import { CategoryService } from '../../shared/category.service';
 import { SpinnerService } from '../../shared/spinner.service';
 
 @Component({
@@ -10,11 +11,19 @@ import { SpinnerService } from '../../shared/spinner.service';
 export class ProjectListPageComponent implements OnInit {
 
   private projectList: any = [];
+  private filteredProjectList: any = [];
+  private tagList: any = [];
+  private searchText: String;
+  private tagFilter: String = 'Python';
 
-  constructor(private projectService: ProjectService, private spinnerService: SpinnerService) { }
+  constructor(
+    private projectService: ProjectService,
+    private categoryService: CategoryService,
+    private spinnerService: SpinnerService) { }
 
   ngOnInit() {
     this.loadProjects();
+    this.loadTags();
   }
 
   /**
@@ -29,9 +38,37 @@ export class ProjectListPageComponent implements OnInit {
           project.tags = project.tags.split(',').map(tag => tag.trim());
           return project;
         });
-        console.log(this.projectList);
+        this.filteredProjectList = this.projectList.slice();
         this.spinnerService.toggleSpinner(false);
     });
+  }
+
+  private loadTags(): void {
+    this.categoryService.getCategories()
+      .subscribe(resp => this.tagList = (resp.success) ? resp.data : []);
+  }
+
+  /**
+   * Tag Filter Change
+   * Filter project list to projects with tag === value
+   */
+  private tagFilterChange(value): void {
+    this.filteredProjectList = this.projectList.slice();
+    if (value.toLowerCase() !== 'all') {
+      this.filteredProjectList = this.filteredProjectList
+        .filter(project => project.tags
+          .map(tag => tag.toLowerCase())
+          .includes(value.toLowerCase()));
+    }
+  }
+
+  /**
+   * Clear All Filters
+   */
+  private clearFilters(): void {
+    this.filteredProjectList = this.projectList.slice();
+    this.searchText = '';
+    this.tagFilter = 'All';
   }
 
 }

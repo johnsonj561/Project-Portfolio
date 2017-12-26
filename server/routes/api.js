@@ -11,21 +11,11 @@ const Project = require('../models/project.model');
 const TOKEN_EXPIRATION = '30m'
 
 
-/* GET api listing. */
-router.get('/navbarData', (req, res) => {
-  console.log('navbarData API hit\n\n');
-  res.json({
-    success: true,
-    message: 'Api is working!'
-  });
-});
-
-
 /*
  * Register New User
  * Validates new user information and stores in mongodb
  */
-router.post('/user', function (req, res) {
+router.post('/user', (req, res) => {
   var user = new User();
   user.username = req.body.username.toLowerCase();
   user.password = req.body.password;
@@ -91,7 +81,7 @@ router.post('/user', function (req, res) {
  * Login User
  * Validates username/password and creates session
  */
-router.post('/authenticate', function (req, res) {
+router.post('/authenticate', (req, res) => {
   const username = req.body.username.toLowerCase();
   const password = req.body.password;
   if (!(username && password)) {
@@ -146,7 +136,11 @@ router.post('/authenticate', function (req, res) {
   });
 });
 
-router.get('/category', function (req, res) {
+/**
+ * GET Category
+ * Returns all categories from Category Collection
+ */
+router.get('/category', (req, res) => {
   Category.find()
     .then(resp => {
       res.json({
@@ -166,7 +160,7 @@ router.get('/category', function (req, res) {
  * GET Project
  * Get project with projectName from Project collection
  */
-router.get('/project/:projectName', function (req, res) {
+router.get('/project/:projectName', (req, res) => {
   const projectName = req.params.projectName;
   Project.findOne({
     name: projectName
@@ -195,7 +189,7 @@ router.get('/project/:projectName', function (req, res) {
  * GET Projects
  * Get all projects from Project collection
  */
-router.get('/projects', function (req, res) {
+router.get('/projects', (req, res) => {
   Project.find().then(resp => {
     res.json({
       success: true,
@@ -205,6 +199,56 @@ router.get('/projects', function (req, res) {
     res.json({
       success: false,
       message: 'Error getting projects',
+      error: err
+    });
+  });
+});
+
+
+/**
+ * GET Courses
+ * Get all courses from Course collection
+ */
+router.get('/courses', (req, res) => {
+  Course.find().then(resp => {
+    res.json({
+      success: true,
+      data: resp
+    });
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: 'Error getting courses',
+      error: err
+    });
+  })
+});
+
+
+/**
+ * Get Course
+ * Get course with courseTitle from Course collection
+ */
+router.get('/course/:courseTitle', (req, res) => {
+  const courseTitle = req.params.courseTitle;
+  Course.findOne({
+    title: courseTitle
+  }).then(resp => {
+    if (resp) {
+      res.json({
+        success: true,
+        data: resp
+      });
+    } else {
+      res.json({
+        success: false,
+        message: `Course ${courseTitle} not found`
+      });
+    }
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: 'Error getting course ${courseTitle}',
       error: err
     });
   });
@@ -258,7 +302,7 @@ router.get('/session', (req, res) => {
  * POST Project
  * Add new project to Project collection
  */
-router.post('/project', function (req, res) {
+router.post('/project', (req, res) => {
   const project = new Project();
   // TODO
   // replace obj assignment with _.extend/_.merge
@@ -312,7 +356,7 @@ router.post('/project', function (req, res) {
  * PUT Project
  * Update an existing project in Project collection
  */
-router.put('/project', function (req, res) {
+router.put('/project', (req, res) => {
   const projectName = req.body.name;
   Project.findOne({
     name: projectName
@@ -357,7 +401,7 @@ router.put('/project', function (req, res) {
  * DELETE Project
  * Delete project with projectName from Project collection
  */
-router.delete('/project/:projectName', function (req, res) {
+router.delete('/project/:projectName', (req, res) => {
   const projectName = req.params.projectName;
   Project.findOneAndRemove({
     name: projectName
@@ -375,41 +419,124 @@ router.delete('/project/:projectName', function (req, res) {
   });
 });
 
-
 /**
- * Course API
+ * POST Course
+ * Add new course to Course collection
  */
-router.get('/course', function (req, res) {
-  res.json({
-    success: true,
-    message: 'get(api/course)'
-  });
+router.post('/course', (req, res) => {
+  console.log('\n\nPOST COURSE\n:', req.body);
+  const course = new Course();
+  // TODO
+  // replace obj assignment with _.extend/_.merge
+  course.title = req.body.title;
+  course.semester = req.body.semester;
+  course.year = req.body.year;
+  course.book = req.body.book;
+  course.description = req.body.description;
+  course.topics = req.body.topics;
+  if (!(course.title && course.description)) {
+    res.json({
+      success: false,
+      message: 'Course title and description are required'
+    });
+  } else {
+    course.save().then(resp => {
+      console.log('resp', resp);
+      res.json({
+        success: true,
+        message: `Course ${course.title} saved to DB`,
+        data: req.body
+      });
+    }).catch(err => {
+      if (err.code === 11000) {
+        res.json({
+          success: false,
+          message: `Course ${course.title} already exists`
+        });
+      } else {
+        res.json({
+          success: false,
+          message: `Error saving ${course.title} to DB`,
+          error: err
+        });
+      }
+    });
+  }
 });
-router.post('/course', function (req, res) {
-  res.json({
-    success: true,
-    message: 'post(api/course)'
-  });
+
+
+/**
+ * PUT Course
+ * Updates an existing course
+ */
+router.put('/course', (req, res) => {
+  const courseTitle = req.body.title;
+  Course.findOne({
+    title: courseTitle
+  }).then(course => {
+    if (!course) {
+      res.json({
+        success: false,
+        message: `Unable to lookup course ${courseTitle} in DB`
+      });
+    } else {
+      course.semester = req.body.semester;
+      course.year = req.body.year;
+      course.book = req.body.book;
+      course.description = req.body.description;
+      course.topics = req.body.topics;
+      course.save().then(resp => {
+        res.json({
+          success: true,
+          message: `Course ${courseTitle} updated successfully`,
+          data: req.body
+        });
+      }).catch(err => {
+        res.json({
+          success: false,
+          message: `Error updating Course ${courseTitle}`,
+          error: err
+        });
+      });
+    }
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: `Error getting Course ${courseTitle} from DB`,
+      error: err
+    });
+  })
 });
-router.put('/course', function (req, res) {
-  res.json({
-    success: true,
-    message: 'put(api/course)'
-  });
-});
-router.delete('/course', function (req, res) {
-  res.json({
-    success: true,
-    message: 'delete(api/course)'
+
+
+/**
+ * DELETE Course
+ * Remove course with courseTitle from Course Collection
+ */
+router.delete('/course/:courseTitle', (req, res) => {
+  const courseTitle = req.params.courseTitle;
+  Course.findOneAndRemove({
+    title: courseTitle
+  }).then(resp => {
+    res.json({
+      success: true,
+      message: `Course ${courseTitle} was deleted from DB`
+    });
+  }).catch(err => {
+    res.json({
+      success: false,
+      message: `Error deleting ${courseTitle} from DB`,
+      error: err
+    })
   });
 });
 
 
 /**
- * Put New Category
+ * POST Category
  * Inserts unique category to categories collection
  */
-router.post('/category', function (req, res) {
+router.post('/category', (req, res) => {
   const category = new Category();
   category.name = req.body.name;
   if (!category.name) {
@@ -442,7 +569,7 @@ router.post('/category', function (req, res) {
  * Delete A Category
  * Removes single instance of category from categories collection
  */
-router.delete('/category/:categoryName', function (req, res) {
+router.delete('/category/:categoryName', (req, res) => {
   console.log(req.params);
   const name = req.params.categoryName;
   Category.findOneAndRemove({

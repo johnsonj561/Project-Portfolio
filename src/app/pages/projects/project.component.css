@@ -43,6 +43,16 @@ div.project-card {
   font-size: .9em;
 }
 
+.clear-filter-btn {
+  margin-top: 25px;
+}
+
+
+/*
+input.text-filter {
+  width: 300px;
+}*/
+
 
 /* project.component */
 
