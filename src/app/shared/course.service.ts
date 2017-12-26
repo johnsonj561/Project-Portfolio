@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 export class CourseService {
 
   private courseUrl = '/api/course';
-  private coursesUrl = 'api/courses';
+  private coursesUrl = '/api/courses';
 
   constructor (private http: HttpClient) {}
 
