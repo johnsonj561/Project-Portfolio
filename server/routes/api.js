@@ -505,7 +505,7 @@ router.put('/course', (req, res) => {
       message: `Error getting Course ${courseTitle} from DB`,
       error: err
     });
-  })
+  });
 });
 
 

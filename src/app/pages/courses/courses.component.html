@@ -1,13 +1,20 @@
 <div class="container">
-  <h3>Courses Component</h3>
-  <!--
-  <div class="row" *ngFor="let post of posts">
-    <div class="card card-block">
-      <h4 class="card-title">Title</h4>
-      <p class="card-text">Body</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div>
-  </div>
--->
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th colspan="2">Instances</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let course of courseList">
+      <td>{{ course.title }}</td>
+      <td>{{ course.instances }}</td>
+      <td><button class="btn btn-sm btn-primary" (click)="outputCategory(course)">View Work</button></td>
+    </tr>
+    <tr *ngIf="!courseList.length">
+      <td>There are no courses!</td>
+    </tr>
+  </table>
+
 </div>
