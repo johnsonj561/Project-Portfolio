@@ -26,7 +26,7 @@
     <span>Topics</span>
     <div class="input-row" *ngFor="let topic of formData.topics; let i = index; trackBy:trackByFn">
       <input type="text" class="form-control" name="topic-{{i}}" [(ngModel)]=" formData.topics[i] " />
-      <span class="glyphicon glyphicon-remove-circle " (click)="deleteTopicRow(topic, i) "></span>
+      <span class="glyphicon glyphicon-remove-circle " (click)="deleteTopicRow(i) "></span>
     </div>
     <button class="btn btn-default btn-sm pull-right add-row" (click)="addTopicRow() ">
       <span class="glyphicon glyphicon-plus "></span>Add Row

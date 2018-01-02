@@ -36,7 +36,7 @@
     <span>Implementation</span>
     <div class="input-row" *ngFor="let item of formData.implementation; let i = index; trackBy:trackByFn">
       <input type="text" class="form-control" name="implementation-{{i}}" [(ngModel)]=" formData.implementation[i] " />
-      <span class="glyphicon glyphicon-remove-circle " (click)="deleteImplementationRow(item, i) "></span>
+      <span class="glyphicon glyphicon-remove-circle " (click)="deleteImplementationRow(i) "></span>
     </div>
     <button class="btn btn-default btn-sm pull-right add-row " (click)="addImplementationRow() ">
       <span class="glyphicon glyphicon-plus "></span>Add Row

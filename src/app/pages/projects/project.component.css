@@ -4,8 +4,14 @@ div.project-card-container {
   justify-content: space-evenly;
 }
 
+div.project-card > .panel-heading {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 div.project-card {
   width: 300px;
+  height: 300px;
   margin: 25px auto;
 }
 
