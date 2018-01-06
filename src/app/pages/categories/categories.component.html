@@ -1,20 +1,21 @@
 <div class="container">
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th colspan="2">Instances</th>
-      </tr>
-    </thead>
-    <tr *ngFor="let category of categoryList">
-      <td>{{ category.name }}</td>
-      <td>{{ category.instances }}</td>
-      <td><button class="btn btn-sm btn-primary" (click)="outputCategory(category)">View Work</button></td>
-    </tr>
-    <tr *ngIf="!categoryList.length">
-      <td>There are no categories!</td>
-    </tr>
-  </table>
+  <div class="row">
+    <div>
+      <label>Search Categories</label>
+      <input class="form-control text-filter" [(ngModel)]="searchText">
+    </div>
+    <div>
+      <button class="btn btn-default btn-sm clear-filter-btn" (click)="clearFilters()">Clear</button>
+    </div>
+  </div>
+
+  <div class="category-card-container" (window:resize)="onResize($event)">
+    <div *ngFor="let category of categoryList | filter : searchText" class="category-card panel panel-default">
+      <div class="panel-body">
+        <span class="text-center">{{category.name}}<br />{{category.instances}}</span>
+      </div>
+    </div>
+  </div>
 
 </div>

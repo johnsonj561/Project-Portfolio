@@ -27,12 +27,14 @@ export class CoursesPageComponent implements OnInit {
     Observable.forkJoin(this.courseService.getCourses(), this.projectService.getProjects())
       .subscribe(resp => {
         this.courseList = resp[0].data;
-        this.courseList = resp[1].data.reduce((mem, project) => {
+        const projectList = resp[1].data;
+        // const courseInstanceMap = {};
+        const courseInstanceMap = projectList.reduce((mem, project) => {
           mem[project.course] = mem[project.course] || 0;
           mem[project.course]++;
           return mem;
-        }, this.courseList);
-        console.log('forkjoin resp', resp);
+        }, {});
+        this.courseList.forEach(course => course.instances = courseInstanceMap[course.title]);
       });
   }
 
