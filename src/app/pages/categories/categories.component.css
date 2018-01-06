@@ -11,7 +11,7 @@ div.category-card {
   position: relative;
   margin: 30px;
   box-shadow: 2px 2px 10px #ccc;
-  transition: all .15s ease-in-out;
+  transition: all 150ms ease-in-out;
   cursor: pointer;
 }
 
