@@ -30,3 +30,16 @@ div.category-card:hover {
 .clear-filter-btn {
   margin-top: 25px;
 }
+
+div.sort-container > label {
+  display: block;
+}
+
+div.sort-container > select {
+  max-width: 80%;
+  display: inline-block;
+}
+
+div.sort-container > button {
+  
+}

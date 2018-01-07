@@ -11,10 +11,12 @@ import { CategoryFilterPipe } from '../../shared/category-filter.pipe';
 })
 export class CategoriesPageComponent implements OnInit, DoCheck {
 
-  private searchText: String;
+  private searchText: string;
   private differ: any;
   private categoryList: any = [];
   private filteredCategoryList: any = [];
+  private sortOptions: any = [];
+  private sortParam: string;
   private cardCoordinates: any;
   private cardElements: any;
   private mouseTimer: any = false;
@@ -26,7 +28,6 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
   // smaller scale distance --> cursor must be closer to card before card scales
   // large scale distance --> cursor will cause card to scale from further away
   private SCALE_DISTANCE = 750;
-
 
   /**
    * On Mousemove animate category cards
@@ -59,6 +60,8 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     private differs: IterableDiffers,
     private categoryFilter: CategoryFilterPipe) {
       this.differ = differs.find([]).create(null);
+      this.sortOptions = ['Alphabetical', 'Instances'];
+      this.sortParam = this.sortOptions[0];
   }
 
   /**
@@ -175,12 +178,40 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
    * On text filter input change, filter the category list
    * Apply filtering programmatically to utilize debounce
    */
-  private textFilterChange(text): void {
-    if(!text || text.length === 0) {
+  private textFilterChange(text=''): void {
+    this.searchText = text;
+    if(text.length === 0) {
       this.filteredCategoryList = this.categoryList.slice();
     } else {
       this.filteredCategoryList = this.categoryFilter.transform(this.categoryList, text);
     }
   }
 
+  private reverseSort(): void {
+    this.filteredCategoryList.reverse();
+  }
+
+  private sortCategories(sortParam): void {
+    this.categoryList.sort(this.compareFunctions[sortParam.toLowerCase()]);
+    this.textFilterChange(this.searchText);
+  }
+
+  private clearFilters(): void {
+    this.sortParam = this.sortOptions[0];
+    this.searchText = '';
+    this.filteredCategoryList = this.categoryList.slice();
+    this.cardCoordinates = this.calculateElementCoordinates();
+  }
+
+  private compareFunctions = {
+    "alphabetical": (a, b) => {
+      if(a.name > b.name) return 1;
+      else return (a.name < b.name) ? -1 : 0;
+    },
+    "instances": (a, b) => {
+      a.instances = a.instances || 0;
+      b.instances = b.instances || 0;
+      return a.instances - b.instances;
+    }
+  }
 }

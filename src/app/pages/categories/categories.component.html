@@ -3,16 +3,16 @@
   <div class="col-sm-12">
 
     <div class="col-sm-4">
-      <label>Filter By Text</label>
+      <label>Filter By Text:</label>
       <input class="form-control text-filter" [ngModel]="searchText" (ngModelChange)="textFilterChange($event)">
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-4 sort-container">
       <label>Sort By:</label>
-      <select class="form-control" name="courseFilter" (change)="courseFilterChange(courseFilter)" [(ngModel)]="courseFilter">
-        <option>All</option>
-        <option *ngFor="let course of courseList" [textContent]="course"></option>
+      <select class="form-control" name="sortParam" (change)="sortCategories(sortParam)" [(ngModel)]="sortParam">
+        <option *ngFor="let sortItem of sortOptions" [textContent]="sortItem"></option>
       </select>
+      <span class="btn btn-default btn-sm glyphicon glyphicon-sort" (click)="reverseSort()"></span>
     </div>
 
     <div class="col-sm-4">
