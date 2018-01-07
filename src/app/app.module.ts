@@ -41,7 +41,9 @@ import { SpinnerService } from './shared/spinner.service';
 import { CourseService } from './shared/course.service';
 
 // Pipes
-import { FilterPipe } from './shared/filter.pipe';
+import { ProjectFilterPipe } from './shared/project-filter.pipe';
+import { CategoryFilterPipe } from './shared/category-filter.pipe';
+
 
 // Interceptor
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -77,7 +79,8 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     CategoryFormComponent,
     EditProjectsPageComponent,
     EditCoursesPageComponent,
-    FilterPipe,
+    CategoryFilterPipe,
+    ProjectFilterPipe,
   ],
   providers: [
     UserService,

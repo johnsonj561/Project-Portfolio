@@ -1,7 +1,5 @@
 <div class="container">
 
-  <!--  TODO -->
-  <!--  Add Search and Filter -->
   <div class="col-sm-12">
 
     <div class="col-sm-3">
@@ -34,7 +32,7 @@
   <div class="col-sm-12">
     <div class="project-card-container">
 
-      <div *ngFor="let project of filteredProjectList | filter : searchText" class="project-card panel panel-default">
+      <div *ngFor="let project of filteredProjectList | projectFilter : searchText" class="project-card panel panel-default">
 
         <div class="panel-heading">
           <span [textContent]="project.name" class="panel-title"></span>

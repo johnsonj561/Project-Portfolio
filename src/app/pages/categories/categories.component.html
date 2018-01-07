@@ -1,21 +1,38 @@
 <div class="container">
 
-  <div class="row">
-    <div>
-      <label>Search Categories</label>
+  <div class="col-sm-12">
+
+    <div class="col-sm-4">
+      <label>Filter By Text</label>
       <input class="form-control text-filter" [(ngModel)]="searchText">
     </div>
-    <div>
-      <button class="btn btn-default btn-sm clear-filter-btn" (click)="clearFilters()">Clear</button>
+
+    <div class="col-sm-4">
+      <label>Sort By:</label>
+      <select class="form-control" name="courseFilter" (change)="courseFilterChange(courseFilter)" [(ngModel)]="courseFilter">
+        <option>All</option>
+        <option *ngFor="let course of courseList" [textContent]="course"></option>
+      </select>
     </div>
+
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-sm clear-filter-btn" (click)="clearFilters()">Clear Filters</button>
+    </div>
+
   </div>
 
-  <div class="category-card-container" (window:resize)="onResize($event)">
-    <div *ngFor="let category of categoryList | filter : searchText" class="category-card panel panel-default">
-      <div class="panel-body">
-        <span class="text-center">{{category.name}}<br />{{category.instances}}</span>
+  <div class="col-sm-12">
+
+    <div class="category-card-container" (window:resize)="onResize($event)" (mouseleave)="resetScale()">
+      <div *ngFor="let category of categoryList | categoryFilter : searchText" class="category-card panel panel-default">
+        <div class="panel-body">
+          <span class="text-center">{{category.name}}<br />{{category.instances}}</span>
+        </div>
       </div>
     </div>
+
   </div>
+
+
 
 </div>
