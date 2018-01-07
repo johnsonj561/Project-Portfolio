@@ -4,7 +4,7 @@
 
     <div class="col-sm-4">
       <label>Filter By Text</label>
-      <input class="form-control text-filter" [(ngModel)]="searchText">
+      <input class="form-control text-filter" [ngModel]="searchText" (ngModelChange)="textFilterChange($event)">
     </div>
 
     <div class="col-sm-4">
@@ -24,7 +24,7 @@
   <div class="col-sm-12">
 
     <div class="category-card-container" (window:resize)="onResize($event)" (mouseleave)="resetScale()">
-      <div *ngFor="let category of categoryList | categoryFilter : searchText" class="category-card panel panel-default">
+      <div *ngFor="let category of filteredCategoryList" class="category-card panel panel-default">
         <div class="panel-body">
           <span class="text-center">{{category.name}}<br />{{category.instances}}</span>
         </div>

@@ -93,6 +93,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     LoggedOutGuard,
     SpinnerService,
     CourseService,
+    CategoryFilterPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
