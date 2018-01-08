@@ -3,6 +3,7 @@ import { CategoryService } from '../../shared/category.service';
 import { ProjectService } from '../../shared/project.service';
 import { Observable } from 'rxjs/Rx';
 import { CategoryFilterPipe } from '../../shared/category-filter.pipe';
+import { SortingService } from '../../shared/sorting.service';
 
 @Component({
   selector: 'app-categories-page',
@@ -21,13 +22,15 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
   private cardElements: any;
   private mouseTimer: any = false;
   private resizeTimer: any = false;
-  private MOUSE_DEBOUNCE = 100;
-  private RESIZE_DEBOUNCE = 250;
-  private MAX_SCALE = 1.4;
+  private MOUSE_DEBOUNCE: number = 100;
+  private RESIZE_DEBOUNCE: number = 250;
+  private MAX_SCALE:number = 1.4;
   // scale distance affects how close card must be to cursor before scaling
   // smaller scale distance --> cursor must be closer to card before card scales
   // large scale distance --> cursor will cause card to scale from further away
-  private SCALE_DISTANCE = 750;
+  private SCALE_DISTANCE: number = 750;
+  private TEXT_FILTER_DEBOUNCE: number = 500;
+  private textFilterTimer: any = false;
 
   /**
    * On Mousemove animate category cards
@@ -58,7 +61,8 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     private categoryService: CategoryService,
     private projectService: ProjectService,
     private differs: IterableDiffers,
-    private categoryFilter: CategoryFilterPipe) {
+    private categoryFilter: CategoryFilterPipe,
+    private sortingService: SortingService) {
       this.differ = differs.find([]).create(null);
       this.sortOptions = ['Alphabetical', 'Instances'];
       this.sortParam = this.sortOptions[0];
@@ -180,6 +184,9 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
    * Apply filtering programmatically to utilize debounce
    */
   private textFilterChange(text=''): void {
+    if(this.textFilterTimer) return;
+    this.textFilterTimer = setTimeout(_ => this.textFilterTimer = false, this.TEXT_FILTER_DEBOUNCE);
+    console.log('running textFilterChange ' + text);
     this.searchText = text;
     if(text.length === 0) {
       this.filteredCategoryList = this.categoryList.slice();
@@ -201,7 +208,7 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
    * Re-applies filters after sort
    */
   private sortCategories(sortParam): void {
-    this.categoryList.sort(this.compareFunctions[sortParam.toLowerCase()]);
+    this.categoryList.sort(this.sortingService.getCompareMethod('category', sortParam));
     this.textFilterChange(this.searchText);
   }
 
@@ -216,26 +223,4 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     this.cardCoordinates = this.calculateElementCoordinates();
   }
 
-  /**
-   * CompareFunctions - need to make this it's own service!!!
-   * TODO
-   */
-  private compareFunctions = {
-    "alphabetical": (a, b) => {
-      const _a = a.name.toLowerCase(),
-      _b = b.name.toLowerCase;
-      if(_a > _b) return 1;
-      else return (a.name < b.name) ? -1 : 0;
-    },
-    "instances": (a, b) => {
-      // if both have instances, sort by instance
-      if(a.instances && b.instances) return b.instances - a.instances;
-      // if both have 0 instanes, sort them alphabetically
-      else if (!a.instances && !b.instances) {
-        return (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1;
-      }
-      // else return the one that has 0 instances
-      else return (a.instances) ? 1 : -1;
-    }
-  }
 }
