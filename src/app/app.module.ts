@@ -44,6 +44,7 @@ import { SortingService } from './shared/sorting.service';
 // Pipes
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { CategoryFilterPipe } from './shared/category-filter.pipe';
+import { CourseFilterPipe } from './shared/course-filter.pipe';
 
 
 // Interceptor
@@ -81,6 +82,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     EditProjectsPageComponent,
     EditCoursesPageComponent,
     CategoryFilterPipe,
+    CourseFilterPipe,
     ProjectFilterPipe,
   ],
   providers: [
@@ -95,6 +97,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     SpinnerService,
     CourseService,
     CategoryFilterPipe,
+    CourseFilterPipe,
     SortingService,
     {
       provide: HTTP_INTERCEPTORS,

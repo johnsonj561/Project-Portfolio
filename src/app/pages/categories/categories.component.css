@@ -23,7 +23,7 @@ div.category-card:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: 1.5em;
+  font-size: 1.4em;
   transform: translate(-50%, -50%);
 }
 

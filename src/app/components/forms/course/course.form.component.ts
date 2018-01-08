@@ -22,7 +22,6 @@ export class CourseFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('form init with data: ', this.formData);
     // if no topics, add empty row
     this.formData.topics = this.formData.topics || [''];
   }

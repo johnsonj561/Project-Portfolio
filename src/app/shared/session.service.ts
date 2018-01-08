@@ -54,22 +54,17 @@ export class SessionService {
   startSessionInterval(): void {
     clearInterval(this.sessionInterval);
     const token = this.tokenService.getToken();
-    console.log('got token: ', token);
     if (token && this.tokenService.isValid(token)) {
-      console.log('Valid token found, starting interval');
       // create interval that checks for token expiration
       this.sessionInterval = setInterval(() => {
         if (!this.tokenService.isValid(token)) {
-          console.log('Token Expired, clearing interval, active user, and routing home');
           clearInterval(this.sessionInterval);
-          console.log('after clearing interval: ', this.sessionInterval);
           this.sessionInterval = false;
           this.announceActiveSession(false);
           this.router.navigate(['/']);
         }
       }, this.CHECK_SESSION_INTERVAL);
     } else {
-      console.log('No valid token found, clearing local browser storage');
       this.tokenService.setToken();
     }
   }

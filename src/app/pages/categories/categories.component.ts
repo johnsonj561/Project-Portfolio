@@ -184,15 +184,14 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
    * Apply filtering programmatically to utilize debounce
    */
   private textFilterChange(text=''): void {
-    if(this.textFilterTimer) return;
-    this.textFilterTimer = setTimeout(_ => this.textFilterTimer = false, this.TEXT_FILTER_DEBOUNCE);
-    console.log('running textFilterChange ' + text);
-    this.searchText = text;
-    if(text.length === 0) {
-      this.filteredCategoryList = this.categoryList.slice();
-    } else {
-      this.filteredCategoryList = this.categoryFilter.transform(this.categoryList, text);
+    if(this.textFilterTimer) {
+      clearTimeout(this.textFilterTimer);
     }
+    this.textFilterTimer = setTimeout(_ => {
+      this.textFilterTimer = false;
+      this.searchText = text;
+      this.filteredCategoryList = (!text.length) ? this.categoryList.slice() : this.categoryFilter.transform(this.categoryList, text);
+    }, this.TEXT_FILTER_DEBOUNCE);
   }
 
   /**
