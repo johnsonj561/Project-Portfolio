@@ -96,6 +96,7 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
           return mem;
         }, {});
         this.categoryList.forEach(category => category.instances = categoryInstanceMap[category.name]);
+        this.sortCategories(this.sortParam);
         this.filteredCategoryList = this.categoryList.slice();
         setTimeout(_ => this.cardCoordinates = this.calculateElementCoordinates(), 1000);
       });
@@ -187,31 +188,54 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     }
   }
 
+  /**
+   * Reverse Sort
+   */
   private reverseSort(): void {
     this.filteredCategoryList.reverse();
   }
 
+  /**
+   * Sort Categories
+   * Sorts category list using CompareFunctions[sortParam] compare function
+   * Re-applies filters after sort
+   */
   private sortCategories(sortParam): void {
     this.categoryList.sort(this.compareFunctions[sortParam.toLowerCase()]);
     this.textFilterChange(this.searchText);
   }
 
+  /**
+   * Clear Filters
+   */
   private clearFilters(): void {
     this.sortParam = this.sortOptions[0];
     this.searchText = '';
+    this.sortCategories(this.sortParam);
     this.filteredCategoryList = this.categoryList.slice();
     this.cardCoordinates = this.calculateElementCoordinates();
   }
 
+  /**
+   * CompareFunctions - need to make this it's own service!!!
+   * TODO
+   */
   private compareFunctions = {
     "alphabetical": (a, b) => {
-      if(a.name > b.name) return 1;
+      const _a = a.name.toLowerCase(),
+      _b = b.name.toLowerCase;
+      if(_a > _b) return 1;
       else return (a.name < b.name) ? -1 : 0;
     },
     "instances": (a, b) => {
-      a.instances = a.instances || 0;
-      b.instances = b.instances || 0;
-      return a.instances - b.instances;
+      // if both have instances, sort by instance
+      if(a.instances && b.instances) return b.instances - a.instances;
+      // if both have 0 instanes, sort them alphabetically
+      else if (!a.instances && !b.instances) {
+        return (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1;
+      }
+      // else return the one that has 0 instances
+      else return (a.instances) ? 1 : -1;
     }
   }
 }

@@ -40,6 +40,6 @@ div.sort-container > select {
   display: inline-block;
 }
 
-div.sort-container > button {
-  
+span.glyphicon-sort {
+  margin-top: -4px;
 }
