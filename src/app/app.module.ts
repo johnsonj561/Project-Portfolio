@@ -14,9 +14,11 @@ import { ComponentRouter } from './app.routes';
 import { HomePageComponent } from './pages/home/home.component';
 import { ProjectListPageComponent } from './pages/projects/project-list.component';
 import { ProjectPageComponent } from './pages/projects/project.component';
-import { CategoriesPageComponent } from './pages/categories/categories.component';
+import { CategoryListPageComponent } from './pages/categories/category-list.component';
+import { CategoryPageComponent } from './pages/categories/category.component';
 import { EditCategoriesPageComponent } from './pages/edit-categories/edit-categories.component';
-import { CoursesPageComponent } from './pages/courses/courses.component';
+import { CourseListPageComponent } from './pages/courses/course-list.component';
+import { CoursePageComponent } from './pages/courses/course.component';
 import { RegisterPageComponent } from './pages/register/register.component';
 import { LoginPageComponent } from './pages/login/login.component';
 import { EditProjectsPageComponent } from './pages/edit-projects/edit-projects.component';
@@ -68,9 +70,11 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     HomePageComponent,
     ProjectListPageComponent,
     ProjectPageComponent,
-    CategoriesPageComponent,
+    CategoryListPageComponent,
+    CategoryPageComponent,
     EditCategoriesPageComponent,
-    CoursesPageComponent,
+    CourseListPageComponent,
+    CoursePageComponent,
     RegisterPageComponent,
     LoginPageComponent,
     NavbarComponent,

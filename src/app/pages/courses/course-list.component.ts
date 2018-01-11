@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, IterableDiffers, DoCheck } from '@angular/core';
+import { Router } from '@angular/router';
 import { CourseService } from '../../shared/course.service';
 import { ProjectService } from '../../shared/project.service';
 import { Observable } from 'rxjs/Rx';
@@ -6,11 +7,11 @@ import { CourseFilterPipe } from '../../shared/course-filter.pipe';
 import { SortingService } from '../../shared/sorting.service';
 
 @Component({
-  selector: 'app-courses-page',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  selector: 'app-course-list-page',
+  templateUrl: './course-list.component.html',
+  styleUrls: ['./course-list.component.css']
 })
-export class CoursesPageComponent implements OnInit {
+export class CourseListPageComponent implements OnInit {
 
 
     private searchText: string;
@@ -23,7 +24,7 @@ export class CoursesPageComponent implements OnInit {
     private cardElements: any;
     private mouseTimer: any = false;
     private resizeTimer: any = false;
-    private MOUSE_DEBOUNCE: number = 100;
+    private MOUSE_DEBOUNCE: number = 80;
     private RESIZE_DEBOUNCE: number = 250;
     private MAX_SCALE:number = 1.4;
     private SCALE_DISTANCE: number = 750;
@@ -60,6 +61,7 @@ export class CoursesPageComponent implements OnInit {
       private projectService: ProjectService,
       private differs: IterableDiffers,
       private courseFilter: CourseFilterPipe,
+      private router: Router,
       private sortingService: SortingService) {
         this.differ = differs.find([]).create(null);
         this.sortOptions = ['Course Name', 'Year', 'Instances'];
@@ -218,5 +220,13 @@ export class CoursesPageComponent implements OnInit {
       this.sortCourses(this.sortParam);
       this.filteredCourseList = this.courseList.slice();
       this.cardCoordinates = this.calculateElementCoordinates();
+    }
+
+    /**
+     * Open Course
+     * Navigates browser to clicked course page
+     */
+    private openCourse({title}): void {
+      this.router.navigate(['course', title]);
     }
 }

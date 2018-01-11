@@ -1,0 +1,9 @@
+.course-container label {
+  margin-top: 25px;
+  display: block;
+}
+
+.date-string {
+  float: right;
+  font-style: italic;
+}

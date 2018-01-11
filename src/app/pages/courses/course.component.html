@@ -1,0 +1,37 @@
+<button class="btn btn-default btn-sm btn-back" (click)="backPage()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+
+<div class="container">
+
+  <!-- User Feedback -->
+  <div *ngIf="error" class="alert-container">
+    <div class="alert alert-danger text-center" *ngIf="error" [textContent]="error"></div>
+  </div>
+
+  <!--  -->
+  <div *ngIf="!error" class="course-container">
+
+    <span [textContent]="course.dateString" class="date-string"></span>
+
+    <h3 [textContent]="course.title"></h3>
+
+    <div class="col-sm-6">
+      <div class="description-container">
+        <label>Description</label>
+        <p [textContent]="course.description"></p>
+      </div>
+      <div class="text-book-container" *ngIf="course.book">
+        <label>Text Book</label>
+        <p [textContent]="course.book"></p>
+      </div>
+    </div>
+
+    <div class="col-sm-6" *ngIf="course.topics && course.topics.length">
+      <label>Topics</label>
+      <ul>
+        <li *ngFor="let topic of course.topics" [textContent]="topic"></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

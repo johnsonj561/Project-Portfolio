@@ -2,15 +2,16 @@ import { Component, OnInit, HostListener, IterableDiffers, DoCheck } from '@angu
 import { CategoryService } from '../../shared/category.service';
 import { ProjectService } from '../../shared/project.service';
 import { Observable } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 import { CategoryFilterPipe } from '../../shared/category-filter.pipe';
 import { SortingService } from '../../shared/sorting.service';
 
 @Component({
-  selector: 'app-categories-page',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  selector: 'app-category-list-page',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.css']
 })
-export class CategoriesPageComponent implements OnInit, DoCheck {
+export class CategoryListPageComponent implements OnInit, DoCheck {
 
   private searchText: string;
   private differ: any;
@@ -22,7 +23,7 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
   private cardElements: any;
   private mouseTimer: any = false;
   private resizeTimer: any = false;
-  private MOUSE_DEBOUNCE: number = 100;
+  private MOUSE_DEBOUNCE: number = 80;
   private RESIZE_DEBOUNCE: number = 250;
   private MAX_SCALE:number = 1.4;
   // scale distance affects how close card must be to cursor before scaling
@@ -62,6 +63,7 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     private projectService: ProjectService,
     private differs: IterableDiffers,
     private categoryFilter: CategoryFilterPipe,
+    private router: Router,
     private sortingService: SortingService) {
       this.differ = differs.find([]).create(null);
       this.sortOptions = ['Alphabetical', 'Instances'];
@@ -220,6 +222,10 @@ export class CategoriesPageComponent implements OnInit, DoCheck {
     this.sortCategories(this.sortParam);
     this.filteredCategoryList = this.categoryList.slice();
     this.cardCoordinates = this.calculateElementCoordinates();
+  }
+
+  private openCategory({name}): void {
+    this.router.navigate(['category', name]);
   }
 
 }

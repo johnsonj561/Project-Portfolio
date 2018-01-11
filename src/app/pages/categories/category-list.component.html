@@ -9,7 +9,7 @@
 
     <div class="col-sm-4 sort-container">
       <label>Sort By:</label>
-      <select class="form-control" name="sortParam" (change)="sortCourses(sortParam)" [(ngModel)]="sortParam">
+      <select class="form-control" name="sortParam" (change)="sortCategories(sortParam)" [(ngModel)]="sortParam">
         <option *ngFor="let sortItem of sortOptions" [textContent]="sortItem"></option>
       </select>
       <span class="btn btn-default btn-sm glyphicon glyphicon-sort" (click)="reverseSort()"></span>
@@ -23,10 +23,10 @@
 
   <div class="col-sm-12">
 
-    <div class="course-card-container" (window:resize)="onResize($event)" (mouseleave)="resetScale()">
-      <div *ngFor="let course of filteredCourseList" class="course-card panel panel-default">
+    <div class="category-card-container" (window:resize)="onResize($event)" (mouseleave)="resetScale()">
+      <div *ngFor="let category of filteredCategoryList" (click)="openCategory(category)" class="category-card panel panel-default">
         <div class="panel-body">
-          <span class="text-center">{{course.title}}<br />{{course.year}}</span>
+          <span class="text-center">{{category.name}}<br />{{category.instances}}</span>
         </div>
       </div>
     </div>

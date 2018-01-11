@@ -1,0 +1,23 @@
+<button class="btn btn-default btn-sm btn-back" (click)="backPage()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+
+<div class="container">
+
+  <!-- User Feedback -->
+  <div *ngIf="error" class="alert-container">
+    <div class="alert alert-danger text-center" *ngIf="error" [textContent]="error"></div>
+  </div>
+
+  <!--  -->
+  <div *ngIf="!error" class="tag-container">
+    <h3 [textContent]="tag"></h3>
+    <label>Linked Projects</label>
+    <table class="table">
+      <tr *ngFor="let project of filteredProjectList">
+        <td [textContent]="project.name"></td>
+        <td [textContent]="project.date"></td>
+        <td><button class="btn btn-primary btn-sm">View</button></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
