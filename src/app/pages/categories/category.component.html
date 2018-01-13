@@ -9,8 +9,8 @@
 
   <!--  -->
   <div *ngIf="!error" class="tag-container">
-    <h3 [textContent]="tag"></h3>
-    <label>Linked Projects</label>
+    <h2 [textContent]="tag" class="text-center"></h2>
+    <h4 class="text-center">Project History</h4>
     <table class="table">
       <tr *ngFor="let project of filteredProjectList">
         <td [textContent]="project.name"></td>

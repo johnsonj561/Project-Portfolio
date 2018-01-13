@@ -2,3 +2,8 @@
   margin-top: 25px;
   display: block;
 }
+
+.table {
+  max-width: 500px;
+  margin: 75px auto 0px auto;
+}
