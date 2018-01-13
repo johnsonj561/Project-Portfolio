@@ -8,11 +8,11 @@
   </div>
 
   <!--  -->
-  <div *ngIf="!error" class="course-container">
+  <div *ngIf="!error" class="course-container row">
 
     <span [textContent]="course.dateString" class="date-string"></span>
 
-    <h3 [textContent]="course.title"></h3>
+    <h2 [textContent]="course.title"></h2>
 
     <div class="col-sm-6">
       <div class="description-container">
@@ -32,6 +32,10 @@
       </ul>
     </div>
 
+  </div>
+
+  <div class="row text-center">
+    <button class="btn btn-primary btn-lg btn-view-projects" (click)="viewProjects(course)">View Projects For This Course</button>
   </div>
 
 </div>

@@ -7,3 +7,8 @@
   float: right;
   font-style: italic;
 }
+
+.btn-view-projects {
+  width: 400px;
+  margin-top: 50px;
+}

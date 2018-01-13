@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { SpinnerService } from '../../shared/spinner.service';
 import { CourseService } from '../../shared/course.service';
@@ -20,7 +20,8 @@ export class CoursePageComponent implements OnInit {
     private spinnerService: SpinnerService,
     private location: Location,
     private courseService: CourseService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.titleSubscription = this.route.params.subscribe(params => this.loadCourse(params['courseTitle']));
@@ -41,6 +42,15 @@ export class CoursePageComponent implements OnInit {
         }
         this.spinnerService.toggleSpinner(false);
       });
+  }
+
+  private viewProjects(course): void {  
+    const navigationExtras = {
+      queryParams: {
+        'course': course.title
+      }
+    }
+    this.router.navigate(['project-list'], navigationExtras);
   }
 
 }
