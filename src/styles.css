@@ -18,3 +18,7 @@ button.btn-back {
   padding: 5px 15px;
   font-size: 1.1em;
 }
+
+.container {
+  padding-top: 25px;
+}
