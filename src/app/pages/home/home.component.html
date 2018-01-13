@@ -1,8 +1,24 @@
 <div class="container">
-  <h3>Home Component</h3>
 
-  <button class="btn btn-primary" routerLink="/project-list">View Projects</button>
-  <button class="btn btn-primary" routerLink="/course-list">View Courses</button>
-  <button class="btn btn-primary" routerLink="/category-list">View Categories</button>
+  <div class="home-menu-container">
+
+    <div class="home-card panel panel-default" (click)="navigate('project-list')">
+      <div class="panel-body text-center">
+        <h2>Projects</h2>
+      </div>
+    </div>
+    <div class="home-card panel panel-default" (click)="navigate('course-list')">
+      <div class="panel-body text-center">
+        <h2>Courses</h2>
+      </div>
+    </div>
+    <div class="home-card panel panel-default" (click)="navigate('category-list')">
+      <div class="panel-body text-center">
+        <h2>Categories</h2>
+      </div>
+    </div>
+
+  </div>
+
 
 </div>
