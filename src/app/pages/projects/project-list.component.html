@@ -9,17 +9,17 @@
 
     <div class="col-sm-3">
       <label>Filter By Course</label>
-      <select class="form-control" name="courseFilter" (change)="courseFilterChange(courseFilter)" [(ngModel)]="courseFilter">
+      <select class="form-control" name="courseFilter" (change)="updatedFilteredList()" [(ngModel)]="courseFilter">
         <option>All</option>
-        <option *ngFor="let course of courseList" [textContent]="course"></option>
+        <option *ngFor="let course of courseList" [textContent]="course" [value]="course"></option>
       </select>
     </div>
 
     <div class="col-sm-3">
       <label>Filter By Tag</label>
-      <select class="form-control" name="tagFilter" (change)="tagFilterChange(tagFilter)" [(ngModel)]="tagFilter">
+      <select class="form-control" name="tagFilter" (change)="updatedFilteredList()" [(ngModel)]="tagFilter">
         <option>All</option>
-        <option *ngFor="let tag of tagList" [textContent]="tag.name"></option>
+        <option *ngFor="let tag of tagList" [textContent]="tag.name" [value]="tag.name"></option>
       </select>
     </div>
 
