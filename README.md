@@ -1,10 +1,10 @@
-# Project Portfolio
+# Angular Project Portfolio
 
 Goals  
 - admin can quickly upload project details (title, description, tool set, image, tags/categories, url to repo)
 - viewers can search/sort/filter through projects and view project details
 
-This project is a first attempt implementing single page application with Angular 2+.
+This project is a first attempt implementing single page application with Angular 5. At the time of writing, I have a little over a year of experience with AngularJS and I am interested in exploring Angular 2+. This project serves more as a learning experience than as a personal project portfolio, for now at least.
 
 ## Build
 
@@ -12,11 +12,35 @@ Be sure to create environment file '.env' in project root directory, see [sample
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
+## Running application
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Note - MongoDB instance must be running. I'm currently running with MongoDB 3.4.4
 
-## Running end-to-end tests
+```
+$ node server
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+If application started successfully, output will read:
+```
+Server running on localhost:3000
+Successfully connected to MongoDB
+```
+
+Point browser to localhost:3000 to view the home page.
+
+## Creating Admin User
+
+You will not be able to upload projects until an admin account has been created.
+
+Visit localhost:3000/register and complete the registration form.
+
+Once you've registered a user, you should remove the registration route from app.routes.ts to prevent visitors from creating accounts.
+
+Once your account has been created, you can log in and begin uploading projects.
+
+## Courses and Tags
+
+The Courses and Tags pages will display only the Courses and Tags that have been created explicitly. These pages do not automatically extract
+course and tag data from uploaded projects.
+
+Future improvements may include auto-detecting courses/tags.
