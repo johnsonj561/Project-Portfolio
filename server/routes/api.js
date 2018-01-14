@@ -6,9 +6,22 @@ const User = require('../models/user.model');
 const Category = require('../models/category.model');
 const Course = require('../models/course.model');
 const Project = require('../models/project.model');
+// Search Modules
+const natural = require('natural');
+const Collection = require('../search/collection');
+const CosineSimilarity = require('../search/cosine-similarity');
+const getCosineSimilarity = CosineSimilarity.cosineSimilarity;
+const searchUtils = require('../search/search');
 
 // token
 const TOKEN_EXPIRATION = '30m'
+
+// load Collection
+const COLLECTION_PATH = './server/search/collection-tfidf.json';
+let collection = new Collection(COLLECTION_PATH);
+collection.loadFromFile()
+  .then(resp => console.log('Project TFIDF values loaded from ' + COLLECTION_PATH))
+  .catch(err => console.log('Error loading collection from ' + COLLECTION_PATH + ': ', err));
 
 
 /*
@@ -254,6 +267,43 @@ router.get('/course/:courseTitle', (req, res) => {
   });
 });
 
+/**
+ * Search projects for query phrase
+ * Calculate tf-idf for all query-doc pairs and return top 5 results
+ */
+router.get('/search/:query', function (req, res, next) {
+  let query = req.params.query;
+  // if no collection loaded return error
+  if (!collection) {
+    res.json({
+      success: false,
+      message: 'No collection available for search'
+    });
+  }
+
+  // get query tfidf
+  query = searchUtils.calcTfIdf(query);
+
+  // for each document, calculate cosine similarity
+  let results = [];
+  collection.documentList.forEach((doc, idx) => {
+    const cs = getCosineSimilarity(query, collection.tfidf.listTerms(idx));
+    results.push({
+      url: doc.url,
+      tfidf: cs
+    });
+  });
+
+  // sort array by tfidf descending
+  results.sort(function (a, b) {
+    return (a.tfidf < b.tfidf) ? 1 : -1;
+  })
+
+  res.json({
+    success: true,
+    data: results.slice(0, 5)
+  });
+})
 
 
 /*
@@ -334,6 +384,7 @@ router.post('/project', (req, res) => {
           });
         }
       } else {
+        setTimeout(updateTfidfValues(collection),0);
         res.json({
           success: true,
           message: 'Project saved',
@@ -375,6 +426,7 @@ router.put('/project', (req, res) => {
       project.course = req.body.course;
       project.save()
         .then(resp => {
+          setTimeout(updateTfidfValues(collection),0);
           res.json({
             success: true,
             message: `Project ${projectName} updated successfully`,
@@ -517,18 +569,9 @@ router.delete('/course/:courseTitle', (req, res) => {
   const courseTitle = req.params.courseTitle;
   Course.findOneAndRemove({
     title: courseTitle
-  }).then(resp => {
-    res.json({
-      success: true,
-      message: `Course ${courseTitle} was deleted from DB`
-    });
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: `Error deleting ${courseTitle} from DB`,
-      error: err
-    })
-  });
+  })
+  .then(resp => res.json(getRespObject(true, `Course ${courseTitle} was deleted from DB`)))
+  .catch(err => res.json(getRespObject(false, `Error deleting ${courseTitle} from DB`, err)));
 });
 
 
@@ -540,25 +583,13 @@ router.post('/category', (req, res) => {
   const category = new Category();
   category.name = req.body.name;
   if (!category.name) {
-    res.json({
-      success: false,
-      message: 'Category name is required'
-    });
+    res.json(getRespObject(false, 'Category name is required'));
   } else {
     category.save(function (err) {
       if (err) {
-        res.json({
-          success: false,
-          message: 'An error occurred while saving category',
-          error: err,
-          category: category
-        });
+        res.json(getRespObject(false, 'An error occurred while saving category', err));
       } else {
-        res.json({
-          success: true,
-          message: 'Category saved',
-          category: category
-        });
+        res.json(getRespObject(true, 'Category saved'));
       }
     })
   }
@@ -574,21 +605,55 @@ router.delete('/category/:categoryName', (req, res) => {
   const name = req.params.categoryName;
   Category.findOneAndRemove({
       name
-    })
-    .then(resp => {
-      res.json({
-        success: true,
-        message: `Category ${name} deleted`
-      })
-    }).catch(err => {
-      res.json({
-        success: false,
-        message: `Error deleting category ${name}`,
-        error: err
-      });
-    })
+    }).then(resp => res.json(getRespObject(true, `Category ${name} deleted`)))
+    .catch(err => res.json(getRespObject(false, `Error deleting category ${name}`, err)));
 });
 
 
+
+/**
+ * POST Collection Init
+ * Builds project collection and writes tfidf values to COLLECTION_PATH
+ */
+router.post('/collection-init', (req, res) => {
+  console.log('collection-init hit');
+  // create a new collection with all projects
+  collection = new Collection(COLLECTION_PATH);
+  updateTfidfValues(collection)
+    .then(resp => res.json(getRespObject(true, `All project TFIDF values written to ${COLLECTION_PATH}`)))
+    .catch(err => res.json(getRespObject(false, err)));
+});
+
+
+
+
+function getRespObject(success, message, errors) {
+  return {
+    success,
+    message,
+    errors
+  }
+}
+
+function updateTfidfValues(collection) {
+  return new Promise((resolve, reject) => {
+    Project.find()
+      .then(resp => {
+        if(!resp || !resp.length) reject('No Projects found, unable to initialize collection');
+        resp.forEach(project => {
+          let text = `${project.description} ${project.github} ${project.date} ${project.course}`;
+          project.implementation.forEach(detail => text += ' ' + detail);
+          project.tags.split(',')
+            .map(tag => tag.trim() + ' ')
+            .forEach(tag => text += tag.repeat(3));
+          text += `${project.name} `.repeat(5);
+          console.log('\n\ntext:\n', text);
+          collection.addDocument(project.name, text);
+        });
+        collection.saveToFile();
+        resolve();
+      }).catch(err => reject("Unable to initialize collection", err));
+  });
+}
 
 module.exports = router;

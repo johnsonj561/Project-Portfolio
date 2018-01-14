@@ -42,6 +42,7 @@ import { ProjectService } from './shared/project.service';
 import { SpinnerService } from './shared/spinner.service';
 import { CourseService } from './shared/course.service';
 import { SortingService } from './shared/sorting.service';
+import { SearchService } from './shared/search.service';
 
 // Pipes
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
@@ -103,6 +104,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     CategoryFilterPipe,
     CourseFilterPipe,
     SortingService,
+    SearchService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
