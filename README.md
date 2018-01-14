@@ -1,8 +1,8 @@
 # Angular Project Portfolio
 
-Goals  
-- admin can quickly upload project details (title, description, tool set, image, tags/categories, url to repo)
-- viewers can search/sort/filter through projects and view project details
+Use Cases:  
+- admin upload project details (title, description, tool set, image, tags/categories, github url, etc)
+- viewers search/sort/filter through projects and view project details
 
 This project is a first attempt implementing single page application with Angular 5. At the time of writing, I have a little over a year of experience with AngularJS and I am interested in exploring Angular 2+. This project serves more as a learning experience than as a personal project portfolio, for now at least.
 
