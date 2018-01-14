@@ -8,7 +8,7 @@ This project is a first attempt implementing single page application with Angula
 
 ## Build
 
-Be sure to create environment file '.env' in project root directory, see [sample.env](sample.env).
+Create environment file '.env' in project root directory, see [sample.env](sample.env).
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
@@ -16,6 +16,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Note - MongoDB instance must be running. I'm currently running with MongoDB 3.4.4
 
+From project root:
 ```
 $ node server
 ```
@@ -26,7 +27,7 @@ Server running on localhost:3000
 Successfully connected to MongoDB
 ```
 
-Point browser to localhost:3000 to view the home page.
+Visit localhost:3000 to view the home page.
 
 ## Creating Admin User
 
