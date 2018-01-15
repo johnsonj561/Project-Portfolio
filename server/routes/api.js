@@ -34,56 +34,32 @@ router.post('/user', (req, res) => {
   user.password = req.body.password;
   user.passwordConfirmation = req.body.passwordConfirmation;
   if (!(user.username && user.password)) {
-    res.json({
-      success: false,
-      message: "Username and password are required"
-    });
+    res.json(getRespObject(false, "Username and password are required" ));
   } else if (user.password !== user.passwordConfirmation) {
-    res.json({
-      success: false,
-      message: "Confirmation password must match password"
-    });
+    res.json(getRespObject(false, "Confirmation password must match password"));
   } else {
     user.save(function (err) {
       // Error
       if (err) {
         if (err.errors) {
           if (err.errors.username) {
-            res.json({
-              success: false,
-              message: err.errors.username.message
-            });
+            res.json(getRespObject(false, err.errors.username.message));
           } else if (err.errors.password) {
-            res.json({
-              success: false,
-              message: err.errors.password.message
-            });
+            res.json(getRespObject(false, err.errors.password.message));
           } else {
-            res.json({
-              success: false,
-              message: err
-            });
+            res.json(getRespObject(false, err));
           }
         } else if (err) {
           if (err.code == 11000) {
-            res.json({
-              success: false,
-              message: "Username already exists"
-            });
+            res.json(getRespObject(false, 'Username already exists'));
           } else {
-            res.json({
-              success: false,
-              message: err
-            });
+            res.json(getRespObject(false, err));
           }
         }
       }
       // Success
       else {
-        res.json({
-          success: true,
-          message: "Registration successful"
-        });
+        res.json(getRespObject(true, 'Registration successful'));
       }
     });
   }
@@ -98,32 +74,20 @@ router.post('/authenticate', (req, res) => {
   const username = req.body.username.toLowerCase();
   const password = req.body.password;
   if (!(username && password)) {
-    return res.json({
-      success: false,
-      message: 'Must provide username and password'
-    });
+    return res.json(getRespObject(false, 'Must provide username and password'));
   }
   User.findOne({
     username: username
   }).select('username password').exec(function (err, user) {
     if (err) {
-      res.json({
-        success: false,
-        message: err
-      });
+      res.json(getRespObject(false, err));
     } else if (!user) {
-      res.json({
-        success: false,
-        message: 'Invalid username'
-      });
+      res.json(getRespObject(false, 'Invalid username'));
     } else if (user) {
       if (password) {
         var validPassword = user.comparePassword(req.body.password);
         if (!validPassword) {
-          res.json({
-            success: false,
-            message: 'Invalid password'
-          });
+          res.json(getRespObject(false, 'Invalid password'));
         } else {
           // else username/password valid, gen token
           var token = jwt.sign({
@@ -140,10 +104,7 @@ router.post('/authenticate', (req, res) => {
         }
         // else no password was provided
       } else {
-        res.json({
-          success: false,
-          message: 'No password provided'
-        });
+        res.json(getRespObject(false, 'No password provided'));
       }
     }
   });
@@ -160,13 +121,7 @@ router.get('/category', (req, res) => {
         success: true,
         data: resp
       })
-    }).catch(err => {
-      res.json({
-        success: false,
-        message: 'Error getting categories',
-        error: err
-      });
-    });
+    }).catch(err => res.json(getRespObject(false, 'Error getting categories', err)));
 });
 
 /**
@@ -184,18 +139,9 @@ router.get('/project/:projectName', (req, res) => {
         data: resp
       });
     } else {
-      res.json({
-        success: false,
-        message: `Project ${projectName} not found`
-      });
+      res.json(getRespObject(false, `Project ${projectName} not found`));
     }
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: 'Error getting projects',
-      error: err
-    });
-  });
+  }).catch(err => res.json(getRespObject(false, 'Error getting projects')));
 });
 
 /**
@@ -208,13 +154,7 @@ router.get('/projects', (req, res) => {
       success: true,
       data: resp
     })
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: 'Error getting projects',
-      error: err
-    });
-  });
+  }).catch(err => res.json(getRespObject(false, 'Error getting projects')));
 });
 
 
@@ -228,13 +168,7 @@ router.get('/courses', (req, res) => {
       success: true,
       data: resp
     });
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: 'Error getting courses',
-      error: err
-    });
-  })
+  }).catch(err => res.json(getRespObject(false, 'Error getting courses', err)));
 });
 
 
@@ -258,13 +192,7 @@ router.get('/course/:courseTitle', (req, res) => {
         message: `Course ${courseTitle} not found`
       });
     }
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: 'Error getting course ${courseTitle}',
-      error: err
-    });
-  });
+  }).catch(err => res.json(getRespObject(false, `Error getting course ${courseTitle}`, err)));
 });
 
 /**
@@ -273,12 +201,12 @@ router.get('/course/:courseTitle', (req, res) => {
  */
 router.get('/search/:query', function (req, res, next) {
   let query = req.params.query;
+  if(!query || !query.length) {
+    return res.json(getRespObject(false, 'Query phrase is required'));
+  }
   // if no collection loaded return error
   if (!collection) {
-    res.json({
-      success: false,
-      message: 'No collection available for search'
-    });
+    return res.json(getRespObject(false, 'No collection available for search operation'));
   }
 
   // get query tfidf
@@ -289,8 +217,8 @@ router.get('/search/:query', function (req, res, next) {
   collection.documentList.forEach((doc, idx) => {
     const cs = getCosineSimilarity(query, collection.tfidf.listTerms(idx));
     results.push({
-      url: doc.url,
-      tfidf: cs
+      name: doc.projectName,
+      score: cs
     });
   });
 
@@ -312,25 +240,17 @@ router.get('/search/:query', function (req, res, next) {
  */
 router.use((req, res, next) => {
   const token = req.body.token || req.body.query || req.headers['x-access-token'];
-  console.log('middleware token', token);
   if (token) {
     jwt.verify(token, process.env.SECRET, function (err, decoded) {
       if (err) {
-        res.json({
-          success: false,
-          message: 'Invalid token, unable to verify'
-        });
+        res.json(getRespObject(false, 'Invalid token, unable to verify'));
       } else {
-        console.log('Token validated');
         req.decoded = decoded;
         next();
       }
     });
   } else {
-    res.json({
-      success: false,
-      message: 'Unable to proceed, no token provided'
-    });
+    res.json(getRespObject(false, 'Unable to proceed, no token provided'));
   }
 });
 
@@ -364,27 +284,17 @@ router.post('/project', (req, res) => {
   project.github = req.body.github;
   project.course = req.body.course;
   if (!(project.name && project.date)) {
-    res.json({
-      success: false,
-      message: 'Project name is required'
-    });
+    res.json(getRespObject(false, 'Project name is required'));
   } else {
     project.save(function (err) {
       if (err) {
         if (err.errors && err.errors.name) {
-          res.json({
-            success: false,
-            message: err.errors.name
-          });
+          res.json(getRespObject(false, err.errors.name));
         } else {
-          res.json({
-            success: false,
-            message: 'Error saving project to DB',
-            error: err
-          });
+          res.json(getRespObject(false, 'Error saving project to DB', err));
         }
       } else {
-        setTimeout(updateTfidfValues(collection),0);
+        setTimeout(updateTfidfValues(collection), 0);
         res.json({
           success: true,
           message: 'Project saved',
@@ -413,10 +323,7 @@ router.put('/project', (req, res) => {
     name: projectName
   }).then(project => {
     if (!project) {
-      res.json({
-        success: false,
-        message: `Unable to lookup Project ${projectName} in DB`
-      });
+      res.json(getRespObject(false, `Unable to lookup Project ${projectName} in DB`));
     } else {
       project.date = req.body.date;
       project.tags = req.body.tags;
@@ -432,21 +339,11 @@ router.put('/project', (req, res) => {
             message: `Project ${projectName} updated successfully`,
             data: req.body
           });
-        }).catch(err => {
-          res.json({
-            success: false,
-            message: `Error updating Project ${projectName}`,
-            error: err
-          });
-        });
+        })
+        .catch(err => res.json(getRespObject(false, `Error updating Project ${projectName}`, err)));
     }
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: `Error getting Project ${projectName} from DB`,
-      error: err
-    });
   })
+  .catch(err => res.json(getRespObject(false, `Error getting Project ${projectName} from DB`, err)));
 });
 
 /**
@@ -457,18 +354,9 @@ router.delete('/project/:projectName', (req, res) => {
   const projectName = req.params.projectName;
   Project.findOneAndRemove({
     name: projectName
-  }).then(resp => {
-    res.json({
-      success: true,
-      message: `Project ${projectName} was deleted from DB`
-    });
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: `Error deleting ${projectName} from DB`,
-      error: err
-    })
-  });
+  })
+  .then(resp => res.json(getRespObject(true, `Project ${projectName} was deleted from DB`)))
+  .catch(err => res.json(getRespObject(false, `Error deleting ${projectName} from DB`, err)));
 });
 
 /**
@@ -487,10 +375,7 @@ router.post('/course', (req, res) => {
   course.description = req.body.description;
   course.topics = req.body.topics;
   if (!(course.title && course.description)) {
-    res.json({
-      success: false,
-      message: 'Course title and description are required'
-    });
+    res.json(getRespObject(false, 'Course title and description are required'));
   } else {
     course.save().then(resp => {
       console.log('resp', resp);
@@ -501,16 +386,9 @@ router.post('/course', (req, res) => {
       });
     }).catch(err => {
       if (err.code === 11000) {
-        res.json({
-          success: false,
-          message: `Course ${course.title} already exists`
-        });
+        res.json(getRespObject(false, `Course ${course.title} already exists`));
       } else {
-        res.json({
-          success: false,
-          message: `Error saving ${course.title} to DB`,
-          error: err
-        });
+        res.json(getRespObject(false, `Error saving ${course.title} to DB`, err));
       }
     });
   }
@@ -527,10 +405,7 @@ router.put('/course', (req, res) => {
     title: courseTitle
   }).then(course => {
     if (!course) {
-      res.json({
-        success: false,
-        message: `Unable to lookup course ${courseTitle} in DB`
-      });
+      res.json(getRespObject(false,  `Unable to lookup course ${courseTitle} in DB`));
     } else {
       course.semester = req.body.semester;
       course.year = req.body.year;
@@ -543,21 +418,9 @@ router.put('/course', (req, res) => {
           message: `Course ${courseTitle} updated successfully`,
           data: req.body
         });
-      }).catch(err => {
-        res.json({
-          success: false,
-          message: `Error updating Course ${courseTitle}`,
-          error: err
-        });
-      });
+      }).catch(err => res.json(getRespObject(false, `Error updating Course ${courseTitle}`, err)));
     }
-  }).catch(err => {
-    res.json({
-      success: false,
-      message: `Error getting Course ${courseTitle} from DB`,
-      error: err
-    });
-  });
+  }).catch(err => res.json(getRespObject(false, `Error getting Course ${courseTitle} from DB`, err)));
 });
 
 
@@ -616,7 +479,6 @@ router.delete('/category/:categoryName', (req, res) => {
  * Builds project collection and writes tfidf values to COLLECTION_PATH
  */
 router.post('/collection-init', (req, res) => {
-  console.log('collection-init hit');
   // create a new collection with all projects
   collection = new Collection(COLLECTION_PATH);
   updateTfidfValues(collection)
@@ -647,7 +509,6 @@ function updateTfidfValues(collection) {
             .map(tag => tag.trim() + ' ')
             .forEach(tag => text += tag.repeat(3));
           text += `${project.name} `.repeat(5);
-          console.log('\n\ntext:\n', text);
           collection.addDocument(project.name, text);
         });
         collection.saveToFile();
