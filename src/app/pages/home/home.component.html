@@ -20,7 +20,15 @@
 
   </div>
 
-  <button class="btn btn-primary btn-sm" (click)="initCollection()">init collection</button>
+  <div class="search-results-container" *ngIf="searchResults.length">
+    <h2>Search Results</h2>
+    <ol>
+      <li *ngFor="let result of searchResults">
+        <a href=""><span [textContent]="result.name"></span></a>
+      </li>
+    </ol>
+
+  </div>
 
 
 </div>

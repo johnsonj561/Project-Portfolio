@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -9,8 +10,14 @@ import 'rxjs/add/operator/catch';
 export class SearchService {
 
   private collectionInitUrl = '/api/collection-init';
+  private queryUrl = '/api/search';
+  private searchResultSource: any;
+  public searchResult$;
 
-  constructor (private http: HttpClient) {}
+  constructor (private http: HttpClient) {
+    this.searchResultSource = new Subject<any>();
+    this.searchResult$ = this.searchResultSource.asObservable();
+  }
 
   /**
    * Initialize Collection
@@ -20,7 +27,26 @@ export class SearchService {
   initCollection(): Observable<any> {
     return this.http.post(this.collectionInitUrl, {})
       .map((res: Response) => res)
-      .catch((error: any) => Observable.throw('projectService.addProject error: ' + error));
+      .catch((error: any) => Observable.throw('SearchService.addProject error: ' + error));
   }
+
+  /**
+   * Query Projects
+   * Runs search query on project list, returns ordered results
+   */
+  queryProjects(query): Observable<any> {
+    return this.http.get(`${this.queryUrl}/${query}`)
+      .map((res: Response) => res)
+      .catch((error: any) => Observable.throw('SearchService.queryProjects error: ' + error));
+  }
+
+  /**
+   * Announce Search Results
+   * Publishes results to subscribed components
+   */
+  announceSearchResults(results): void {
+    this.searchResultSource.next(results);
+  }
+
 
 }

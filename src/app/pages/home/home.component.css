@@ -21,3 +21,7 @@ div.panel-body {
   width: 100%;
   transform: translateY(-50%);
 }
+
+.search-results-container > ol {
+  font-size: 1.3em;
+}

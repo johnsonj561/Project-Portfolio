@@ -216,15 +216,17 @@ router.get('/search/:query', function (req, res, next) {
   let results = [];
   collection.documentList.forEach((doc, idx) => {
     const cs = getCosineSimilarity(query, collection.tfidf.listTerms(idx));
-    results.push({
-      name: doc.projectName,
-      score: cs
-    });
+    if(cs > 0) {
+      results.push({
+        name: doc.projectName,
+        score: cs
+      });
+    }
   });
 
   // sort array by tfidf descending
   results.sort(function (a, b) {
-    return (a.tfidf < b.tfidf) ? 1 : -1;
+    return (a.score < b.score) ? 1 : -1;
   })
 
   res.json({
