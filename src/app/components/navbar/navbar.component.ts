@@ -41,4 +41,10 @@ export class NavbarComponent implements OnInit {
       });
   }
 
+  clearSearch(): void {
+    this.searchService.announceSearchResults({
+      success: false
+    });
+  }
+
 }
