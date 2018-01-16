@@ -210,12 +210,12 @@ router.get('/search/:query', function (req, res, next) {
   }
 
   // get query tfidf
-  query = searchUtils.calcTfIdf(query);
+  queryTfidf = searchUtils.calcTfIdf(query);
 
   // for each document, calculate cosine similarity
   let results = [];
   collection.documentList.forEach((doc, idx) => {
-    const cs = getCosineSimilarity(query, collection.tfidf.listTerms(idx));
+    const cs = getCosineSimilarity(queryTfidf, collection.tfidf.listTerms(idx));
     if(cs > 0) {
       results.push({
         name: doc.projectName,
@@ -229,9 +229,14 @@ router.get('/search/:query', function (req, res, next) {
     return (a.score < b.score) ? 1 : -1;
   })
 
+  const data = {
+    data: results.slice(0, 5),
+    query: query
+  }
+
   res.json({
     success: true,
-    data: results.slice(0, 5)
+    data: data
   });
 })
 
@@ -287,6 +292,8 @@ router.post('/project', (req, res) => {
   project.course = req.body.course;
   if (!(project.name && project.date)) {
     res.json(getRespObject(false, 'Project name is required'));
+  } else if(project.name.length > 34) {
+    res.json(getRespObject(false, 'Project must be less than 34 characters'));
   } else {
     project.save(function (err) {
       if (err) {

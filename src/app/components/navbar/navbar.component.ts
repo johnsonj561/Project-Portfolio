@@ -12,9 +12,8 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class NavbarComponent implements OnInit {
 
-  query;
-  navbarData;
-  spinnerOn = false;
+  private query: string;
+  private navbarData: any;
 
   @Input() activeSession: boolean;
 
@@ -24,7 +23,9 @@ export class NavbarComponent implements OnInit {
     private searchService: SearchService,
     private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.query = '';
+  }
 
   logout(): void {
     this.userService.logout();
@@ -33,15 +34,14 @@ export class NavbarComponent implements OnInit {
   }
 
   search(query): void {
-    console.log('Search on query: ', query);
     this.searchService.queryProjects(query)
       .subscribe(resp => {
-        console.log('search query returned response: ', resp);
         this.searchService.announceSearchResults(resp);
       });
   }
 
   clearSearch(): void {
+    this.query = '';
     this.searchService.announceSearchResults({
       success: false
     });

@@ -16,9 +16,7 @@
         <li><a *ngIf="!activeSession" routerLink="/login">Login</a></li>
       </ul>
       <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" name="query" class="form-control" placeholder="Search Projects" [(ngModel)]="query">
-        </div>
+        <input type="text" name="query" class="form-control" placeholder="Search Projects" [(ngModel)]="query">
         <button type="submit" (click)="search(query)" class="btn btn-default">
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         <button (click)="clearSearch()" class="btn btn-default">

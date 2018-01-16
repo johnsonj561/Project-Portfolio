@@ -11,13 +11,19 @@ export class HomePageComponent implements OnInit {
 
   private searchResultSubscription: any;
   private searchResults: any = [];
+  private query: string;
 
   constructor(private router: Router, private searchService: SearchService) { }
 
   ngOnInit() {
     this.searchResultSubscription = this.searchService.searchResult$
       .subscribe(results => {
-        this.searchResults = (results.success) ? results.data : [];
+        if(results.success) {
+          this.searchResults = results.data.data;
+          this.query = results.data.query;
+        } else {
+          this.searchResults = [];
+        }
       });
   }
 
@@ -42,8 +48,6 @@ export class HomePageComponent implements OnInit {
   private clearSearch(): void {
     this.searchResults = [];
   }
-
-
 
 
 }
