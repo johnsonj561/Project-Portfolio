@@ -38,5 +38,9 @@ export class SidePanelComponent implements OnInit {
     this.searchResults = [];
   }
 
+  private openProject(name): void {
+    this.clearSearch();
+    this.router.navigate(['/project', name]);
+  }
 
 }
