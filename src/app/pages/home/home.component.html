@@ -21,18 +21,3 @@
   </div>
 
 </div>
-
-<div class="right-side-panel panel panel-default" [ngClass]="{'visible': searchResults.length }">
-  <div class="panel-body">
-    <span class="glyphicon glyphicon-remove pointer" (click)="clearSearch()"></span>
-    <!-- <div class="query-phrase">
-      <span [innerText]="query"></span>
-    </div> -->
-    <h3>Search Results</h3>
-    <ol>
-      <li *ngFor="let result of searchResults">
-        <a href=""><span [textContent]="result.name"></span></a>
-      </li>
-    </ol>
-  </div>
-</div>

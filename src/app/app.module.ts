@@ -26,6 +26,7 @@ import { EditCoursesPageComponent } from './pages/edit-courses/edit-courses.comp
 
 // Other Components
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { MainSpinnerComponent } from './components/spinners/main.spinner.component';
 import { UserFormComponent } from './components/forms/user/user.form.component';
 import { ProjectFormComponent } from './components/forms/project/project.form.component';
@@ -79,6 +80,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     RegisterPageComponent,
     LoginPageComponent,
     NavbarComponent,
+    SidePanelComponent,
     MainSpinnerComponent,
     UserFormComponent,
     ProjectFormComponent,
