@@ -12,9 +12,11 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() { }
 
-  private navigate(page): void{
+  /**
+   * Navigate to page
+   */
+  private navigate(page): void {
     this.router.navigate([`/${page}`]);
   }
-
 
 }

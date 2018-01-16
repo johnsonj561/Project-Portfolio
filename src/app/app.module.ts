@@ -26,6 +26,7 @@ import { EditCoursesPageComponent } from './pages/edit-courses/edit-courses.comp
 
 // Other Components
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { MainSpinnerComponent } from './components/spinners/main.spinner.component';
 import { UserFormComponent } from './components/forms/user/user.form.component';
 import { ProjectFormComponent } from './components/forms/project/project.form.component';
@@ -42,6 +43,7 @@ import { ProjectService } from './shared/project.service';
 import { SpinnerService } from './shared/spinner.service';
 import { CourseService } from './shared/course.service';
 import { SortingService } from './shared/sorting.service';
+import { SearchService } from './shared/search.service';
 
 // Pipes
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
@@ -78,6 +80,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     RegisterPageComponent,
     LoginPageComponent,
     NavbarComponent,
+    SidePanelComponent,
     MainSpinnerComponent,
     UserFormComponent,
     ProjectFormComponent,
@@ -103,6 +106,7 @@ import { LoggedOutGuard } from './guards/logged-out.guard';
     CategoryFilterPipe,
     CourseFilterPipe,
     SortingService,
+    SearchService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
