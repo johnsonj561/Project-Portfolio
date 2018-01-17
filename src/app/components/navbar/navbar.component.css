@@ -2,3 +2,18 @@ nav.navbar>div.container {
   width: 100%;
   padding: 0px 25px;
 }
+
+/* Navbar Collapse */
+@media(max-width: 667px) {
+  body {
+    background: pink;
+  }
+  ul.nav > li {
+    text-align: right;
+  }
+
+  nav input.form-control {
+    display: inline-block;
+    width: 65%;
+  }
+}

@@ -1,27 +1,35 @@
-<!-- Fixed navbar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-left">
-        <li><a routerLink="/">Home</a></li>
-        <li class="dropdown" *ngIf="activeSession">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Menu <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a routerLink="/edit-courses">Courses</a></li>
-            <li><a routerLink="/edit-categories">Categories</a></li>
-            <li><a routerLink="/edit-projects">Projects</a></li>
-            <li class="pointer"><a (click)="logout()">Logout</a></li>
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a routerLink="/">Home</a></li>
+            <li class="dropdown" *ngIf="activeSession">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Menu <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a routerLink="/edit-courses">Courses</a></li>
+                <li><a routerLink="/edit-categories">Categories</a></li>
+                <li><a routerLink="/edit-projects">Projects</a></li>
+                <li class="pointer"><a (click)="logout()">Logout</a></li>
+              </ul>
+            </li>
+            <li><a *ngIf="!activeSession" routerLink="/login">Login</a></li>
           </ul>
-        </li>
-        <li><a *ngIf="!activeSession" routerLink="/login">Login</a></li>
-      </ul>
-      <form class="navbar-form navbar-right">
-        <input type="text" name="query" class="form-control" placeholder="Search Projects" [(ngModel)]="query">
-        <button type="submit" (click)="search(query)" class="btn btn-default">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-        <button (click)="clearSearch()" class="btn btn-default">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-      </form>
+          <form class="navbar-form navbar-right">
+            <input type="text" name="query" class="form-control" placeholder="Search Projects" [(ngModel)]="query">
+            <button type="submit" (click)="search(query)" class="btn btn-default">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            <button (click)="clearSearch()" class="btn btn-default">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          </form>
+        </div>
     </div>
-  </div>
 </nav>

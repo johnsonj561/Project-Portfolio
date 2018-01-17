@@ -25,3 +25,18 @@
   font-size: 1.2em;
   padding-left: 25px;
 }
+
+/* Navbar Collapse */
+@media(max-width: 667px) {
+  .right-side-panel {
+    width: 100%;
+    height: auto;
+    padding-botom: 50px;
+    top: -100px;
+    left: 0px;
+  }
+  /* 210px offset clears the navbar */
+  .right-side-panel.visible {
+    transform: translateY(310px);
+  }
+}

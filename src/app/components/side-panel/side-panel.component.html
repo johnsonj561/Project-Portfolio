@@ -7,7 +7,7 @@
     <h3>Search Results</h3>
     <ol>
       <li *ngFor="let result of searchResults">
-        <a (click)="openProject(result.name)"><span [textContent]="result.name"></span></a>
+        <a (click)="openProject(result.name)" class="pointer"><span [textContent]="result.name"></span></a>
       </li>
     </ol>
   </div>
