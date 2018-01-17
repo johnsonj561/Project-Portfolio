@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../shared/user.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { UserService } from '../../services/user.service';
+import { SpinnerService } from '../../services/spinner.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 

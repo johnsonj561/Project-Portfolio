@@ -33,22 +33,22 @@ import { ProjectFormComponent } from './components/forms/project/project.form.co
 import { CourseFormComponent } from './components/forms/course/course.form.component';
 import { CategoryFormComponent } from './components/forms/category/category.form.component';
 
-// Shared Services
-import { UserService } from './shared/user.service';
-import { CategoryService } from './shared/category.service';
-import { SessionService } from './shared/session.service';
-import { WindowRefService } from './shared/window.ref.service';
-import { TokenService } from './shared/token.service';
-import { ProjectService } from './shared/project.service';
-import { SpinnerService } from './shared/spinner.service';
-import { CourseService } from './shared/course.service';
-import { SortingService } from './shared/sorting.service';
-import { SearchService } from './shared/search.service';
+// services Services
+import { UserService } from './services/user.service';
+import { CategoryService } from './services/category.service';
+import { SessionService } from './services/session.service';
+import { WindowRefService } from './services/window.ref.service';
+import { TokenService } from './services/token.service';
+import { ProjectService } from './services/project.service';
+import { SpinnerService } from './services/spinner.service';
+import { CourseService } from './services/course.service';
+import { SortingService } from './services/sorting.service';
+import { SearchService } from './services/search.service';
 
 // Pipes
-import { ProjectFilterPipe } from './shared/project-filter.pipe';
-import { CategoryFilterPipe } from './shared/category-filter.pipe';
-import { CourseFilterPipe } from './shared/course-filter.pipe';
+import { ProjectFilterPipe } from './pipes/project-filter.pipe';
+import { CategoryFilterPipe } from './pipes/category-filter.pipe';
+import { CourseFilterPipe } from './pipes/course-filter.pipe';
 
 
 // Interceptor

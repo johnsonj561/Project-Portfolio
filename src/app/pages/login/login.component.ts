@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/user.service';
-import { TokenService } from '../../shared/token.service';
-import { SessionService } from '../../shared/session.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { UserService } from '../../services/user.service';
+import { TokenService } from '../../services/token.service';
+import { SessionService } from '../../services/session.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-login-page',

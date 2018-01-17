@@ -1,5 +1,11 @@
 <div class="container">
 
+  <!-- User Feedback -->
+  <div class="alert-container">
+    <div class="alert alert-success text-center" *ngIf="successMessage" [textContent]="successMessage"></div>
+    <div class="alert alert-danger text-center" *ngIf="errorMessage" [textContent]="successMessage"></div>
+  </div>
+
   <!--  List of categories -->
   <div class="col-sm-9">
     <h3>Existing Categories</h3>

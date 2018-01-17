@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../../shared/project.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { ProjectService } from '../../services/project.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-edit-projects-page',

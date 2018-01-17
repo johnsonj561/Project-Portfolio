@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, IterableDiffers, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
-import { CourseService } from '../../shared/course.service';
-import { ProjectService } from '../../shared/project.service';
+import { CourseService } from '../../services/course.service';
+import { ProjectService } from '../../services/project.service';
 import { Observable } from 'rxjs/Rx';
-import { CourseFilterPipe } from '../../shared/course-filter.pipe';
-import { SortingService } from '../../shared/sorting.service';
+import { CourseFilterPipe } from '../../pipes/course-filter.pipe';
+import { SortingService } from '../../services/sorting.service';
 
 @Component({
   selector: 'app-course-list-page',

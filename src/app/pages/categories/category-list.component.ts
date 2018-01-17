@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, IterableDiffers, DoCheck } from '@angular/core';
-import { CategoryService } from '../../shared/category.service';
-import { ProjectService } from '../../shared/project.service';
+import { CategoryService } from '../../services/category.service';
+import { ProjectService } from '../../services/project.service';
 import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
-import { CategoryFilterPipe } from '../../shared/category-filter.pipe';
-import { SortingService } from '../../shared/sorting.service';
+import { CategoryFilterPipe } from '../../pipes/category-filter.pipe';
+import { SortingService } from '../../services/sorting.service';
 
 @Component({
   selector: 'app-category-list-page',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from '../../shared/project.service';
-import { CategoryService } from '../../shared/category.service';
-import { CourseService } from '../../shared/course.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { ProjectService } from '../../services/project.service';
+import { CategoryService } from '../../services/category.service';
+import { CourseService } from '../../services/course.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-project-list-page',

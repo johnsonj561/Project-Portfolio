@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseService } from '../../shared/course.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { CourseService } from '../../services/course.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-edit-courses-page',

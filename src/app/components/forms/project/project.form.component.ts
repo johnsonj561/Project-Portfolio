@@ -22,7 +22,6 @@ export class ProjectFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('form init with data: ', this.formData);
     // if no implementations, add empty row
     this.formData.implementation = this.formData.implementation || [''];
   }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { SpinnerService } from '../../shared/spinner.service';
-import { ProjectService } from '../../shared/project.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-category-page',

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ProjectService } from '../../shared/project.service';
-import { SpinnerService } from '../../shared/spinner.service';
+import { ProjectService } from '../../services/project.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-project-page',

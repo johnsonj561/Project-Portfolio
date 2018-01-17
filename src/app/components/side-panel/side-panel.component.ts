@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SearchService } from '../../shared/search.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-side-panel-component',
@@ -41,6 +41,10 @@ export class SidePanelComponent implements OnInit {
   private openProject(name): void {
     this.clearSearch();
     this.router.navigate(['/project', name]);
+  }
+
+  ngOnDestroy() {
+    this.searchResultSubscription.unsubscribe();
   }
 
 }

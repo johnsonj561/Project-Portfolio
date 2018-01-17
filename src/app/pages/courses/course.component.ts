@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { SpinnerService } from '../../shared/spinner.service';
-import { CourseService } from '../../shared/course.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-course-page',

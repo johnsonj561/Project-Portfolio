@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { SessionService } from './shared/session.service';
-import { TokenService } from './shared/token.service';
+import { SessionService } from './services/session.service';
+import { TokenService } from './services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.activeSession = this.tokenService.isValid(token);
     this.sessionService.startSessionInterval();
     this.sessionSubscription = this.sessionService.activeSession$
-      .subscribe(session => {
-        this.activeSession = session;
-        console.log('SESSION UPDTED: ', this.activeSession);
-      });
+      .subscribe(session => this.activeSession = session);
   }
 
   ngOnDestroy() {
