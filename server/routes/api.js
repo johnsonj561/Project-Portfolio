@@ -303,7 +303,7 @@ router.post('/project', (req, res) => {
           res.json(getRespObject(false, 'Error saving project to DB', err));
         }
       } else {
-        setTimeout(updateTfidfValues(collection), 0);
+        setTimeout(_ => updateTfidfValues(collection), 0);
         res.json({
           success: true,
           message: 'Project saved',
@@ -342,7 +342,7 @@ router.put('/project', (req, res) => {
       project.course = req.body.course;
       project.save()
         .then(resp => {
-          setTimeout(updateTfidfValues(collection),0);
+          setTimeout(_ => updateTfidfValues(collection), 0);
           res.json({
             success: true,
             message: `Project ${projectName} updated successfully`,
@@ -364,7 +364,10 @@ router.delete('/project/:projectName', (req, res) => {
   Project.findOneAndRemove({
     name: projectName
   })
-  .then(resp => res.json(getRespObject(true, `Project ${projectName} was deleted from DB`)))
+  .then(resp => {
+    setTimeout(_ => updateTfidfValues(collection), 0);
+    res.json(getRespObject(true, `Project ${projectName} was deleted from DB`))
+  })
   .catch(err => res.json(getRespObject(false, `Error deleting ${projectName} from DB`, err)));
 });
 
@@ -511,6 +514,7 @@ function updateTfidfValues(collection) {
     Project.find()
       .then(resp => {
         if(!resp || !resp.length) reject('No Projects found, unable to initialize collection');
+        collection = new Collection(COLLECTION_PATH);
         resp.forEach(project => {
           let text = `${project.description} ${project.github} ${project.date} ${project.course}`;
           project.implementation.forEach(detail => text += ' ' + detail);
