@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
 
   private query: string;
   private navbarData: any;
+  private searchLoading: boolean;
 
   @Input() activeSession: boolean;
 
@@ -34,14 +35,17 @@ export class NavbarComponent implements OnInit {
   }
 
   search(query): void {
+    this.searchLoading = true;
     this.searchService.queryProjects(query)
       .subscribe(resp => {
+        this.searchLoading = false;
         this.searchService.announceSearchResults(resp);
       });
   }
 
   clearSearch(): void {
     this.query = '';
+    this.searchLoading = false;
     this.searchService.announceSearchResults({
       success: false
     });

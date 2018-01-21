@@ -25,8 +25,9 @@
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" name="query" class="form-control" placeholder="Search Projects" [(ngModel)]="query">
-            <button type="submit" (click)="search(query)" class="btn btn-default">
+            <button type="submit" (click)="search(query)" class="btn btn-default" *ngIf="!searchLoading">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            <span *ngIf="searchLoading" class="search-loading"><i class="fa fa-spinner fa-spin fa-fw"></i></span>
             <button (click)="clearSearch()" class="btn btn-default">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
           </form>
