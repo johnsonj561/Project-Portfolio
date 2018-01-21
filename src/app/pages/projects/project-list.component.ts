@@ -94,11 +94,12 @@ export class ProjectListPageComponent implements OnInit {
   /**
    * Apply Filter Functions
    */
+  // tslint:disable-next-line:member-ordering
   private applyFilter: any = {
     'course': function(arr, filter) {
       return (filter.toLowerCase() === 'all') ?
         arr.slice() :
-        arr.slice().filter(project => project.course.toLowerCase() === filter.toLowerCase());
+        arr.slice().filter(project => project.course && project.course.toLowerCase() === filter.toLowerCase());
     },
     'tag': function(arr, filter) {
       return (filter.toLowerCase() === 'all') ?
@@ -107,6 +108,6 @@ export class ProjectListPageComponent implements OnInit {
           .map(tag => tag.toLowerCase())
           .includes(filter.toLowerCase()));
     }
-  }
+  };
 
 }
