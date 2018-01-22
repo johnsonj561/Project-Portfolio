@@ -1,0 +1,197 @@
+[{
+	"_id": {
+		"$oid": "5a4aef429b492a100a3fa8e9"
+	},
+	"name": "Python",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef469b492a100a3fa8ea"
+	},
+	"name": "NLTK",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef4c9b492a100a3fa8eb"
+	},
+	"name": "TypeScript",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef519b492a100a3fa8ed"
+	},
+	"name": "Angular",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef569b492a100a3fa8ee"
+	},
+	"name": "AngularJS",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef7c9b492a100a3fa8ef"
+	},
+	"name": "JavaScript",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef809b492a100a3fa8f0"
+	},
+	"name": "Machine Learning",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a4aef839b492a100a3fa8f1"
+	},
+	"name": "Clustering",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6401bd5ffe2b0c2d4efdac"
+	},
+	"name": "K Means",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6401c95ffe2b0c2d4efdad"
+	},
+	"name": "SPA",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6401cc5ffe2b0c2d4efdae"
+	},
+	"name": "Node.js",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402115ffe2b0c2d4efdaf"
+	},
+	"name": "MongoDB",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402185ffe2b0c2d4efdb0"
+	},
+	"name": "AWS",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402285ffe2b0c2d4efdb1"
+	},
+	"name": "Edit Distance",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402325ffe2b0c2d4efdb2"
+	},
+	"name": "Natural Language Processing",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a64023a5ffe2b0c2d4efdb3"
+	},
+	"name": "Naive Bayes",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a64023b5ffe2b0c2d4efdb4"
+	},
+	"name": "SVM",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402425ffe2b0c2d4efdb5"
+	},
+	"name": "WEKA",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a64024b5ffe2b0c2d4efdb6"
+	},
+	"name": "Design Patterns",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402565ffe2b0c2d4efdb7"
+	},
+	"name": "Search",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6402575ffe2b0c2d4efdb8"
+	},
+	"name": "Natural",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a64025a5ffe2b0c2d4efdb9"
+	},
+	"name": "Classification",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a65475d13b6ba1110dbf54c"
+	},
+	"name": "Android",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a65477013b6ba1110dbf54d"
+	},
+	"name": "PHP",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a65478213b6ba1110dbf54e"
+	},
+	"name": "Java",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a65479713b6ba1110dbf550"
+	},
+	"name": "Computer Vision",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a65479813b6ba1110dbf551"
+	},
+	"name": "OpenCV",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a6547ba13b6ba1110dbf552"
+	},
+	"name": "MSP430",
+	"__v": 0
+}]
+
